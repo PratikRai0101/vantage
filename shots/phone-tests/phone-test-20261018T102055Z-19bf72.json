@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-18T10:20:33.168Z",
+  "device": {
+    "declaredEnvironment": "desktop",
+    "physicalDeviceVerified": false,
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+    "platform": "MacIntel",
+    "hardwareConcurrency": 10,
+    "viewport": {
+      "width": 402,
+      "height": 874,
+      "visualHeight": 874
+    },
+    "screen": {
+      "width": 402,
+      "height": 874
+    },
+    "devicePixelRatio": 1,
+    "effectiveRenderPixelRatio": 1,
+    "reducedMotion": false,
+    "webgl2": true,
+    "visibility": "visible"
+  },
+  "workload": "Three explicit 6s replay samples after 1.1s camera warmup; no manual gesture claim",
+  "samples": [
+    {
+      "camera": "overview",
+      "wallSeconds": 6.013,
+      "replaySeconds": 6.016,
+      "clockToWallRatio": 1.001,
+      "raf": {
+        "samples": 360,
+        "excluded": 0,
+        "observedRafHz": 60,
+        "medianIntervalMs": 16.7,
+        "p95IntervalMs": 16.7,
+        "worstIntervalMs": 16.8,
+        "over34ms": 0,
+        "over50ms": 0
+      },
+      "reportedDrawCalls": {
+        "min": 310,
+        "max": 310
+      },
+      "reportedTriangles": 48114
+    },
+    {
+      "camera": "follow",
+      "wallSeconds": 6.019,
+      "replaySeconds": 6.016,
+      "clockToWallRatio": 1,
+      "raf": {
+        "samples": 360,
+        "excluded": 0,
+        "observedRafHz": 60,
+        "medianIntervalMs": 16.7,
+        "p95IntervalMs": 16.7,
+        "worstIntervalMs": 16.8,
+        "over34ms": 0,
+        "over50ms": 0
+      },
+      "reportedDrawCalls": {
+        "min": 66,
+        "max": 88
+      },
+      "reportedTriangles": 40364
+    },
+    {
+      "camera": "battle",
+      "wallSeconds": 6.015,
+      "replaySeconds": 6.016,
+      "clockToWallRatio": 1,
+      "raf": {
+        "samples": 358,
+        "excluded": 0,
+        "observedRafHz": 59.67,
+        "medianIntervalMs": 16.7,
+        "p95IntervalMs": 16.7,
+        "worstIntervalMs": 33.3,
+        "over34ms": 0,
+        "over50ms": 0
+      },
+      "reportedDrawCalls": {
+        "min": 123,
+        "max": 172
+      },
+      "reportedTriangles": 43376
+    }
+  ],
+  "controlHitTests": [
+    {
+      "selector": "#play",
+      "inViewport": true,
+      "clear": true
+    },
+    {
+      "selector": "#seek",
+      "inViewport": true,
+      "clear": true
+    },
+    {
+      "selector": "#speed",
+      "inViewport": true,
+      "clear": true
+    },
+    {
+      "selector": "[data-camera=overview]",
+      "inViewport": true,
+      "clear": true
+    },
+    {
+      "selector": "[data-camera=follow]",
+      "inViewport": true,
+      "clear": true
+    },
+    {
+      "selector": "[data-camera=battle]",
+      "inViewport": true,
+      "clear": true
+    }
+  ],
+  "controlHitTestScope": "DOM only; cannot detect native Safari/system overlays or establish touch usability",
+  "errors": [],
+  "completed": true,
+  "finishedAt": "2026-10-18T10:20:55.155Z",
+  "pointerEvents": {
+    "touch": 0,
+    "mouse": 1,
+    "pen": 0
+  },
+  "caveats": [
+    "rAF scheduling, not GPU presentation",
+    "Physical hardware identity is user-declared and unverified",
+    "No thermal/battery/haptic measurement",
+    "DOM hit tests cannot detect native browser/system overlays",
+    "Only this recorded excerpt; not a live feed test"
+  ]
+}

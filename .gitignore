@@ -1,0 +1,39 @@
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+
+# Expo / React Native generated output
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+metro-health-check*
+*.tsbuildinfo
+
+# Generated native projects (continuous native generation -- see mobile/README.md)
+mobile/ios/
+mobile/android/
+
+# Local build artifacts, logs and toolchains (large; rebuild with mobile/scripts/build-*.sh)
+mobile/builds/
+mobile/build-logs/
+mobile/.toolchain/
+
+# Environment
+.env
+.env*.local
+
+# Signing material
+*.jks
+*.keystore
+*.p8
+*.p12
+*.mobileprovision
+
+# Blender autosave backups
+*.blend1
+
+# Generated preview bundles (rebuild with mobile/scripts/preview-*.ts; see RENDER-STABILITY.md)
+shots/**/preview.js

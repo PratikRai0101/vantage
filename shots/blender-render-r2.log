@@ -1,0 +1,16 @@
+/Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/scripts/render_circuits.py:55: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  m=bpy.data.materials.new(name);m.diffuse_color=rgb(h);m.use_nodes=True
+/Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/scripts/render_circuits.py:215: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world=bpy.data.worlds.new('Studio');scene.world=world;world.use_nodes=True
+00:10.307  render           | Saved: '/Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/assets/circuit-a.png'
+Info: Saved as "circuit-a.blend"
+RENDER_COMPLETE a /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/assets/circuit-a.png
+00:18.386  render           | Saved: '/Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/assets/circuit-b.png'
+Info: Saved as "circuit-b.blend"
+RENDER_COMPLETE b /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/assets/circuit-b.png
+00:24.947  render           | Saved: '/Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/assets/circuit-c.png'
+Info: Saved as "circuit-c.blend"
+RENDER_COMPLETE c /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/assets/circuit-c.png
+Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
+
+Blender quit

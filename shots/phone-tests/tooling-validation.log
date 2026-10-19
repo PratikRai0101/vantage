@@ -1,0 +1,70 @@
+{
+  "passed": true,
+  "report": "phone-test-20261018T102849Z-3772bc.json",
+  "samples": [
+    {
+      "camera": "overview",
+      "wallSeconds": 6.008,
+      "replaySeconds": 6.016,
+      "clockToWallRatio": 1.001,
+      "raf": {
+        "samples": 360,
+        "excluded": 0,
+        "observedRafHz": 60,
+        "medianIntervalMs": 16.7,
+        "p95IntervalMs": 16.7,
+        "worstIntervalMs": 16.8,
+        "over34ms": 0,
+        "over50ms": 0
+      },
+      "reportedDrawCalls": {
+        "min": 310,
+        "max": 310
+      },
+      "reportedTriangles": 48114
+    },
+    {
+      "camera": "follow",
+      "wallSeconds": 6.016,
+      "replaySeconds": 6.016,
+      "clockToWallRatio": 1,
+      "raf": {
+        "samples": 360,
+        "excluded": 0,
+        "observedRafHz": 60,
+        "medianIntervalMs": 16.7,
+        "p95IntervalMs": 16.7,
+        "worstIntervalMs": 16.8,
+        "over34ms": 0,
+        "over50ms": 0
+      },
+      "reportedDrawCalls": {
+        "min": 66,
+        "max": 88
+      },
+      "reportedTriangles": 40364
+    },
+    {
+      "camera": "battle",
+      "wallSeconds": 6.015,
+      "replaySeconds": 6.017,
+      "clockToWallRatio": 1,
+      "raf": {
+        "samples": 360,
+        "excluded": 0,
+        "observedRafHz": 60,
+        "medianIntervalMs": 16.7,
+        "p95IntervalMs": 16.8,
+        "worstIntervalMs": 16.8,
+        "over34ms": 0,
+        "over50ms": 0
+      },
+      "reportedDrawCalls": {
+        "min": 123,
+        "max": 172
+      },
+      "reportedTriangles": 43376
+    }
+  ],
+  "physicalDeviceVerified": false
+}

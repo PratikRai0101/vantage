@@ -1,0 +1,22 @@
+
+Shot 3 screen(s) at 3x -> /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/explore-r2-small
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/explore-r2-small/01-a-race-instrument.png
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/explore-r2-small/02-b-broadcast-atlas.png
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/explore-r2-small/03-c-tabletop.png
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/explore-r2-small/sheet.png   (the flow; open each 3x PNG above for detail)
+
+── a-race-instrument ─────────────────────────────
+  fonts {"SF Pro":21,"IBM Plex Mono":5}  sizes [34, 20, 17, 15, 13, 12, 11]  weights [400, 500, 600]  hues [216, 24]  cards 0
+  clean
+
+── b-broadcast-atlas ─────────────────────────────
+  fonts {"SF Pro":14,"Archivo":2}  sizes [32, 23, 20, 15, 13, 12, 11]  weights [400, 600, 800]  hues [24, 216]  cards 0
+  clean
+
+── c-tabletop ─────────────────────────────
+  fonts {"SF Pro Rounded":7,"SF Pro":16}  sizes [34, 22, 17, 15, 13, 12, 11]  weights [400, 600, 700, 800]  hues [48, 24, 216]  cards 0
+  warn  Three saturated hue families (48°, 24°, 216°). Is each one earning its place?
+
+App-wide: 10 text sizes [34, 32, 23, 22, 20, 17, 15, 13, 12, 11]  warn: a type scale this long is not a scale. Merge sizes a step apart.
+
+No FAILs. The scan only catches mechanical tells. Now read sheet.png with your own eyes.

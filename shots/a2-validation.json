@@ -1,0 +1,44 @@
+{
+  "results": [
+    {
+      "test": "mockup interactions",
+      "drivers": 22,
+      "deltaEnd": -0.143,
+      "pitRejoin": "P7",
+      "allDemo": true,
+      "allNavigation": true
+    },
+    {
+      "width": 728,
+      "camera": true,
+      "telemetry": true,
+      "timingTick": true,
+      "pitScenario": true,
+      "reducedMotion": true,
+      "overflow": false,
+      "contentHeight": 1952
+    },
+    {
+      "width": 390,
+      "camera": true,
+      "telemetry": true,
+      "timingTick": true,
+      "pitScenario": true,
+      "reducedMotion": true,
+      "overflow": false,
+      "contentHeight": 2411
+    },
+    {
+      "width": 320,
+      "camera": true,
+      "telemetry": true,
+      "timingTick": true,
+      "pitScenario": true,
+      "reducedMotion": true,
+      "overflow": false,
+      "contentHeight": 2153
+    }
+  ],
+  "errors": [],
+  "systemReducedMotion": true
+}

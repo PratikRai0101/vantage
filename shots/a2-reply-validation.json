@@ -1,0 +1,23 @@
+[
+  {
+    "width": 728,
+    "allImages": true,
+    "errors": [],
+    "overflow": false,
+    "passed": true
+  },
+  {
+    "width": 390,
+    "allImages": true,
+    "errors": [],
+    "overflow": false,
+    "passed": true
+  },
+  {
+    "width": 320,
+    "allImages": true,
+    "errors": [],
+    "overflow": false,
+    "passed": true
+  }
+]

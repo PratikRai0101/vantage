@@ -1,0 +1,5 @@
+{
+  "url": "https://api.openf1.org/v1/position?session_key=9496",
+  "fetchedAt": "2026-10-18T05:54:49.591618+00:00",
+  "reason": "As-of rank state needs events preceding the bounded clip"
+}

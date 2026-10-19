@@ -1,0 +1,110 @@
+[
+  {
+    "width": 728,
+    "key": "a",
+    "height": 1321,
+    "overflow": false,
+    "images": true,
+    "title": "Race instrument",
+    "mode": "focus"
+  },
+  {
+    "width": 728,
+    "key": "b",
+    "height": 1321,
+    "overflow": false,
+    "images": true,
+    "title": "Broadcast atlas",
+    "mode": "focus"
+  },
+  {
+    "width": 728,
+    "key": "c",
+    "height": 1321,
+    "overflow": false,
+    "images": true,
+    "title": "Tabletop",
+    "mode": "focus"
+  },
+  {
+    "width": 728,
+    "key": "compare",
+    "height": 1106,
+    "overflow": false,
+    "images": true,
+    "title": "Tabletop",
+    "mode": "compare"
+  },
+  {
+    "width": 390,
+    "key": "a",
+    "height": 1844,
+    "overflow": false,
+    "images": true,
+    "title": "Race instrument",
+    "mode": "focus"
+  },
+  {
+    "width": 390,
+    "key": "b",
+    "height": 1844,
+    "overflow": false,
+    "images": true,
+    "title": "Broadcast atlas",
+    "mode": "focus"
+  },
+  {
+    "width": 390,
+    "key": "c",
+    "height": 1821,
+    "overflow": false,
+    "images": true,
+    "title": "Tabletop",
+    "mode": "focus"
+  },
+  {
+    "width": 390,
+    "key": "compare",
+    "height": 1000,
+    "overflow": false,
+    "images": true,
+    "title": "Tabletop",
+    "mode": "compare"
+  },
+  {
+    "width": 320,
+    "key": "a",
+    "height": 1825,
+    "overflow": false,
+    "images": true,
+    "title": "Race instrument",
+    "mode": "focus"
+  },
+  {
+    "width": 320,
+    "key": "b",
+    "height": 1848,
+    "overflow": false,
+    "images": true,
+    "title": "Broadcast atlas",
+    "mode": "focus"
+  },
+  {
+    "width": 320,
+    "key": "c",
+    "height": 1848,
+    "overflow": false,
+    "images": true,
+    "title": "Tabletop",
+    "mode": "focus"
+  },
+  {
+    "width": 320,
+    "key": "compare",
+    "height": 1041,
+    "overflow": false,
+    "images": true,
+    "title": "Tabletop",
+    "mode": "compare"
+  }
+]

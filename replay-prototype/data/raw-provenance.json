@@ -1,0 +1,58 @@
+{
+  "session-query.json": {
+    "url": "https://api.openf1.org/v1/sessions?year=2024&circuit_short_name=Suzuka&session_name=Race",
+    "fetchedAt": "2026-10-18T05:47:57.459218Z",
+    "status": "ok",
+    "rows": 1,
+    "attempts": 1
+  },
+  "drivers.json": {
+    "url": "https://api.openf1.org/v1/drivers?session_key=9496",
+    "fetchedAt": "2026-10-18T05:47:59.670629Z",
+    "status": "ok",
+    "rows": 20,
+    "attempts": 1
+  },
+  "location.json": {
+    "url": "https://api.openf1.org/v1/location?session_key=9496&date%3E=2024-04-07T05%3A54%3A58Z&date%3C=2024-04-07T05%3A57%3A02Z",
+    "fetchedAt": "2026-10-18T05:48:26.888423Z",
+    "status": "ok",
+    "rows": 9500,
+    "attempts": 1
+  },
+  "car_data.json": {
+    "url": "https://api.openf1.org/v1/car_data?session_key=9496&date%3E=2024-04-07T05%3A54%3A58Z&date%3C=2024-04-07T05%3A57%3A02Z",
+    "fetchedAt": "2026-10-18T05:48:31.153672Z",
+    "status": "ok",
+    "rows": 8960,
+    "attempts": 1
+  },
+  "position.json": {
+    "url": "https://api.openf1.org/v1/position?session_key=9496&date%3E=2024-04-07T05%3A54%3A30Z&date%3C=2024-04-07T05%3A57%3A30Z",
+    "fetchedAt": "2026-10-18T05:48:31.974683Z",
+    "status": "ok",
+    "rows": 20,
+    "attempts": 1
+  },
+  "intervals.json": {
+    "url": "https://api.openf1.org/v1/intervals?session_key=9496&date%3E=2024-04-07T05%3A54%3A30Z&date%3C=2024-04-07T05%3A57%3A30Z",
+    "fetchedAt": "2026-10-18T05:48:34.602258Z",
+    "status": "ok",
+    "rows": 710,
+    "attempts": 1
+  },
+  "laps.json": {
+    "url": "https://api.openf1.org/v1/laps?session_key=9496",
+    "fetchedAt": "2026-10-18T05:48:11.723795Z",
+    "status": "ok",
+    "rows": 908,
+    "attempts": 1
+  },
+  "stints.json": {
+    "url": "https://api.openf1.org/v1/stints?session_key=9496",
+    "fetchedAt": "2026-10-18T05:48:12.860056Z",
+    "status": "ok",
+    "rows": 74,
+    "attempts": 1
+  }
+}

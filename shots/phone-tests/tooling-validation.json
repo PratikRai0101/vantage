@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "report": "phone-test-20261018T102849Z-3772bc.json",
+  "environment": "desktop Chrome, not physical hardware",
+  "tests": [
+    "opt-in diagnostics only",
+    "three workloads complete",
+    "no page/resource failures",
+    "clock restored paused",
+    "backgrounded sample rejected",
+    "unauthenticated static access rejected",
+    "invalid report token rejected",
+    "outside-allowlist path rejected"
+  ],
+  "errors": []
+}

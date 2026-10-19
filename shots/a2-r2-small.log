@@ -1,0 +1,44 @@
+
+Shot 9 screen(s) at 3x -> /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/a2-r2-small
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/a2-r2-small/01-race-overview.png
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/a2-r2-small/02-live-timing.png
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/a2-r2-small/03-driver-follow.png
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/a2-r2-small/04-telemetry-lab.png
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/a2-r2-small/05-strategy-workbench.png
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/a2-r2-small/06-feed-interrupted.png
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/a2-r2-small/07-light-studio.png
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/a2-r2-small/08-camera-storyboard.png
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/a2-r2-small/09-vantage-icon.png
+  /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/shots/a2-r2-small/sheet.png   (the flow; open each 3x PNG above for detail)
+
+── 01-race-overview ─────────────────────────────
+  fonts {"SF Pro":19,"IBM Plex Mono":5}  sizes [34, 22, 17, 15, 13, 11]  weights [400, 600]  hues [24, 216]  cards 0
+  clean
+
+── 02-live-timing ─────────────────────────────
+  fonts {"SF Pro":44,"IBM Plex Mono":15}  sizes [34, 15, 13, 11]  weights [400, 600]  hues []  cards 0
+  warn  Text inside the system's safe areas: "ALO" (home indicator)
+
+── 03-driver-follow ─────────────────────────────
+  fonts {"SF Pro":12,"IBM Plex Mono":3}  sizes [52, 34, 22, 15, 13, 11]  weights [400, 600]  hues [216]  cards 0
+  clean
+
+── 04-telemetry-lab ─────────────────────────────
+  fonts {"SF Pro":26,"IBM Plex Mono":12}  sizes [34, 15, 13, 11]  weights [400, 600]  hues [24, 216]  cards 0
+  warn  Text inside the system's safe areas: "0" (home indicator); "2.0" (home indicator); "4.0" (home indicator)
+
+── 05-strategy-workbench ─────────────────────────────
+  fonts {"SF Pro":21,"IBM Plex Mono":5}  sizes [52, 34, 22, 17, 15, 13, 11]  weights [400, 600]  hues [216]  cards 0
+  warn  Text inside the system's safe areas: "1" (home indicator); "19" (home indicator); "31" (home indicator)
+
+── 06-feed-interrupted ─────────────────────────────
+  fonts {"SF Pro":8,"IBM Plex Mono":4}  sizes [34, 22, 15, 13]  weights [400, 600]  hues [48, 216]  cards 0
+  clean
+
+── 07-light-studio ─────────────────────────────
+  fonts {"SF Pro":19,"IBM Plex Mono":5}  sizes [34, 22, 17, 15, 13, 11]  weights [400, 600]  hues [24, 216]  cards 0
+  clean
+
+App-wide: 7 text sizes [52, 34, 22, 17, 15, 13, 11]
+
+No FAILs. The scan only catches mechanical tells. Now read sheet.png with your own eyes.

@@ -1,0 +1,13 @@
+Copyright (c) 2026 Pratik Rai. All rights reserved.
+
+Vantage and all source code, design files, models and assets in this repository are
+proprietary and confidential. No licence or permission, express or implied, is granted
+to use, copy, modify, distribute, sublicense or commercially exploit any part of it
+without prior written permission from the copyright holder.
+
+Third-party components, fonts, data and reference works remain under their own licences:
+
+- `assets/CIRCUIT-LICENSE.txt` -- Suzuka plan geometry (MIT)
+- `assets/archivo-OFL.txt` -- Archivo typeface (SIL Open Font License)
+- `mobile/assets/licenses/third_party_notices.json` -- notices bundled into the native app
+- `replay-prototype/data/SOURCES.md` -- timing/telemetry provenance and terms

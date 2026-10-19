@@ -1,0 +1,75 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "test": "desktop interactions",
+      "movingActors": 17,
+      "allRecords": 20,
+      "stationaryStreams": 3,
+      "movement": 1.573025601065441,
+      "sharedClock": true,
+      "cameras": [
+        "overview",
+        "follow",
+        "battle"
+      ],
+      "orbit": true,
+      "keyboardTabs": true,
+      "keyboardChart": true,
+      "endState": true,
+      "reducedMotion": true
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "horizontalOverflow": false,
+      "targetMinimum44": true,
+      "transportHitTest": true,
+      "allTabs": true,
+      "sharedClock": true,
+      "headingClipping": false
+    },
+    {
+      "width": 402,
+      "height": 874,
+      "horizontalOverflow": false,
+      "targetMinimum44": true,
+      "transportHitTest": true,
+      "allTabs": true,
+      "sharedClock": true,
+      "headingClipping": false
+    },
+    {
+      "width": 375,
+      "height": 667,
+      "horizontalOverflow": false,
+      "targetMinimum44": true,
+      "transportHitTest": true,
+      "allTabs": true,
+      "sharedClock": true,
+      "headingClipping": false
+    },
+    {
+      "width": 320,
+      "height": 874,
+      "horizontalOverflow": false,
+      "targetMinimum44": true,
+      "transportHitTest": true,
+      "allTabs": true,
+      "sharedClock": true,
+      "headingClipping": false
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "horizontalOverflow": false,
+      "targetMinimum44": true,
+      "transportHitTest": true,
+      "allTabs": true,
+      "sharedClock": true,
+      "headingClipping": false
+    }
+  ],
+  "errors": [],
+  "failedRequests": []
+}

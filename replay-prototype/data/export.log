@@ -1,0 +1,48 @@
+INFO Draco mesh compression is available, use library at /Applications/Blender.app/Contents/Resources/5.1/scripts/addons_core/io_scene_gltf2/libextern_draco.dylib
+11:18:44 | INFO: Starting glTF 2.0 export
+11:18:44 | INFO: Extracting primitive: Cube.001
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Cube.002
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: strip-curb
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Painted kerbs
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Painted kerbs.001
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: strip-road
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: strip-curb.001
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: strip-curb.002
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: strip-trim
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Instances-patch
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Instances-trim
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Instances-building
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Instances-window
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Instances-seat
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Instances-wheel-red
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Instances-base
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Instances-tree
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Instances-tree2
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Instances-road
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Extracting primitive: Instances-curb
+11:18:44 | INFO: Primitives created: 1
+11:18:44 | INFO: Finished glTF 2.0 export in 0.028415918350219727 s
+
+EXPORTED_CAR_FREE_WORLD /Users/pratikrai/.t3/scratch/2026-10-17-we-are-designing-an-iphone-8faf2666/replay-prototype/data/suzuka-world.glb
+Blender 5.1.2 (hash ec6e62d40fa9 built 2026-05-19 01:30:33)
+
+Blender quit

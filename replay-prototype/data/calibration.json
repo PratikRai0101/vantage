@@ -1,0 +1,27 @@
+{
+  "method": "Robust 2D similarity ICP; nearest centreline with temporal crossing continuity",
+  "matrix": [
+    [
+      0.005098281851545909,
+      -8.151844287882317e-05
+    ],
+    [
+      8.151844287882296e-05,
+      0.005098281851545908
+    ]
+  ],
+  "translation": [
+    19.791186351999084,
+    11.157434282652634
+  ],
+  "sampleCount": 901,
+  "fitMedianModelUnits": 0.14407405889852548,
+  "projectionMedianModelUnits": 0.0815709719881282,
+  "projectionP95ModelUnits": 0.21768815102318953,
+  "limitations": [
+    "Road and car scale enlarged for miniature legibility.",
+    "Illustrative road elevation is used instead of recorded altitude.",
+    "Lane placement, pit lane geometry and exact wheel-to-wheel moves are not represented.",
+    "Cars with stationary/zero-speed streams are not animated."
+  ]
+}

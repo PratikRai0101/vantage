@@ -23,7 +23,7 @@ xcrun simctl launch booted dev.vantage.spectator
 
 # Working JDK + Android SDK required. Export JAVA_HOME, PATH and ANDROID_HOME first.
 npm run build:android
-# builds/vantage-replay.apk — local testing key, NOT Play Store signing
+# builds/vantage-ssaa.apk — local testing key, NOT Play Store signing
 ```
 
 Native folders are CNG-generated from `app.json`; do not hand-edit them. The simulator `.app` cannot be installed on a physical iPhone. Device distribution needs appropriate Apple signing. Logs/artifacts are ignored by Git.
@@ -38,6 +38,7 @@ Native folders are CNG-generated from `app.json`; do not hand-edit them. The sim
 - Automatic dark/light semantic UI colors, bundled IBM Plex Mono, system-native labels and tabs.
 - App backgrounding pauses replay; returning does not silently resume it. Hidden/idle scene rendering is suspended.
 - Explicit rendering failures, not a screenshot fallback.
+- 2× render-target supersampling for the native scene (sRGB target, linear then direct fallback).
 
 Native capture links seed existing state once, for example:
 

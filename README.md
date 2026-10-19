@@ -9,12 +9,13 @@ Verified on a physical Samsung Note 20 5G (Android 13, release APK):
 - Native Race / Timing / Lab screens, the shared replay engine and Overview / Follow / Battle cameras.
 - Startup, camera change and moving-field pixel gates pass — real GL-region comparisons, not UI-only checks.
 - Task/timing pacing and the overview framing fix are measured on-device (`RENDER-STABILITY.md`).
-- `cd mobile && npm run check` — TypeScript, ESLint and 36 pure tests pass.
+- 2× supersampling in the native renderer (sRGB target, linear then direct fallback). Verified on an Android emulator; Note20 capture is pending.
+- `cd mobile && npm run check` — TypeScript, ESLint and 39 pure tests pass.
 
 Not yet established:
 
 - iOS device behaviour. Simulator moving-replay presentation is a known EXGL limitation; no physical iPhone has run the app.
-- Native antialiasing on Android: Expo GL exposes no MSAA path. Open item with measured evidence in `RENDER-STABILITY.md`.
+- Note20 acceptance and GPU pacing of the 2× SSAA path. The emulator is a GLES/ANGLE check, not a device performance result; hardware MSAA remains unavailable in Expo GL on Android.
 - GPU presentation timing, thermals, p99 frame hitches, intermittent blackouts, ghosting, and any device beyond the one test handset.
 
 No store submission. The local APK is debug-key signed — not a Play Store artifact. No live-data integration and no commercial rights clearance; see `REFERENCES.md`.

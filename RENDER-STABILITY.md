@@ -51,7 +51,42 @@ Evidence: `shots/quality-overview/before-overview.png`, `after-overview.png` (in
 
 Two overview-only art corrections shipped with it: the selected car no longer draws a team field dot on top of its own bodywork (it already has the ground ring, label and stem; the 15 px disc covered the cockpit at the new scale), and the irritant field dots for other cars stay at 3.5 dp.
 
-Still open after this pass: no MSAA on Android (`expo-gl` passes `msaaSamples` to iOS only, so EXGL renders the default framebuffer unmultisampled), so road/kerb edges remain 1–2 px aliased; a supported, measured AA path is still required. Follow/Battle framing, playback motion and pacing were **not** re-captured after this change — the phone owner resumed using the device mid-check.
+Follow/Battle framing, playback motion and pacing were **not** re-captured after the framing change — the phone owner resumed using the device mid-check.
+
+## Aliasing — confirmed; 2× SSAA correction
+
+### Confirmation
+
+The open aliasing report is real. `shots/quality-overview/after-overview.png` is the installed Note20 overview build; `shots/quality-overview/full.png` is the same scene and camera rendered by the browser harness with Chromium's 4× MSAA. Both are 1080×956 scene rasters. `mobile/scripts/measure_aliasing.py` measures strong luma transitions and counts runs where one pixel carries more than 80% of the contrast:
+
+| capture | edge runs | hard-step fraction | mean edge length |
+| --- | ---: | ---: | ---: |
+| Note20, EXGL no AA | 30,658 | 0.640 | 1.65 px |
+| browser, 4× MSAA | 31,438 | 0.224 | 2.54 px |
+
+`shots/quality-overview/alias-before-panel.png` is the 4× nearest crop: the kerb/road staircase on the device beside the graded edge in the MSAA reference. This is a sampling defect, not a small buffer: `gl.drawingBufferWidth/Height` match the 1080×956 viewport 1:1.
+
+### Capability finding
+
+The installed expo-gl 58.0.3 has no Android MSAA route:
+
+- `GLView.js` forwards `msaaSamples` only on iOS: `Platform.OS === 'ios' ? msaaSamples : undefined`.
+- Android `GLContext.java` builds its EGL config without `EGL_SAMPLE_BUFFERS`/`EGL_SAMPLES`, so the default framebuffer is single-sampled.
+- `common/EXWebGLMethods.cpp` marks `renderbufferStorageMultisample` UNIMPL. It does implement `createFramebuffer`, `bindFramebuffer`, `framebufferTexture2D`, `checkFramebufferStatus` and `renderbufferStorage`.
+
+A render-to-texture supersample pass is therefore the supported path; hardware MSAA is not.
+
+### Correction
+
+`mobile/src/scene/supersample.ts` renders the scene into a 2× target and resolves it with a fullscreen triangle sampling LINEAR at half scale (four scene samples per output pixel). The target prefers `SRGB8_ALPHA8` for shadow precision; if that framebuffer is incomplete it rebuilds as linear, and if that is also incomplete it draws directly instead of showing black. `runtime.ts` sends every scene draw through it; draw-call/triangle reporting still comes from the scene pass. Three new tests cover the resolve, the sRGB→linear rebuild and the direct fallback (39 tests total).
+
+The browser harness now renders the same frame through this path as well (`window.SSAA`). On that frame the hard-step fraction is 0.299, against 0.219 for browser MSAA and 0.640 for the un-antialiased Note20 capture. Browser output is a shader/orientation check, not device acceptance.
+
+### Verification
+
+- **Android emulator** (Pixel 10, API 37, GLES through ANGLE): before/after APKs on the same overview screen and the same crop give hard-step fraction **0.611 → 0.285** and mean edge length **1.70 → 2.53 px**. Full captures are `shots/quality-overview/emulator-before-ssaa.png` and `emulator-after-ssaa.png`; the 4× crop is `alias-emulator-panel.png`.
+- **Note20**: final APK `builds/vantage-ssaa.apk` is installed (SHA-256 `63e16c33f7c2a3d9f53b5ec760a4afed4652d8943e8beb4f776d92f46230514f`), but the handset was locked at verification time, so the device capture is **pending**. The prior Note20 build is preserved as `builds/vantage-before-ssaa.apk`.
+- **Cost**: 2× SSAA is four times the fragment work plus one resolve pass. GPU/present pacing and thermals were not measured; do not claim 60 fps or performance parity from the emulator.
 
 ## Runtime verification
 
@@ -66,7 +101,7 @@ Still open after this pass: no MSAA on Android (`expo-gl` passes `msaaSamples` t
 
 - Intermittent complete material/scene blackouts were not reproduced in this bounded run; need exact triggering camera/time/action or a recording if they recur.
 - Ghosting/noise may include surface/depth aliasing, context presentation or temporal hold; not isolated yet. No temporal accumulation or motion blur added as camouflage.
-- Overview framing is fitted and device-verified, but Follow/Battle re-capture after that change and a native antialiasing path are still outstanding.
+- Overview framing is fitted and device-verified, but Follow/Battle re-capture after that change is still outstanding. The 2× SSAA path is built and emulator-verified; Note20 capture and GPU pacing remain open.
 - Car-to-car display intersections are now suppressed using counted projection groups, not invented lanes/contact. This is a display reconstruction rule, not proof about physical race proximity. Other environmental intersections still need individual geometry inspection.
 - Short unrecorded CPU measurements improved after car batching (details below), but long callback gaps remain. Sustained GPU/presentation profiling is still required; neither recording intervals nor JS CPU timings prove GPU FPS.
 - Car aesthetics, refined materials/lighting, supported antialiasing and optional cinematic blur remain work. Fixing inverted normals improves visibility but is not a finished car-design pass.

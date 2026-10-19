@@ -7,6 +7,7 @@ import type { ReplayEngine, TrackData } from '../replay';
 import { cameraFrustum, cameraGoal, constrainOrbit, overviewGoal, routeHeading, routePoint, type CameraGoal } from './math';
 import { carContactShadow, disposeTree, driverLabel, driverTether, fieldMarker, selectionRing } from './objects';
 import { nativeRendererParameters } from './gl-adapter';
+import { createSupersampledRenderer, type SupersampledRenderer } from './supersample';
 import { prepareLoaderHost } from './loader-host';
 import { groupProjectedCars, nextGroupDriver, type ProjectedGroup } from './projected-groups';
 import { createCarFleet } from './instanced-cars';
@@ -51,6 +52,7 @@ export class RaceSceneRuntime {
   private readonly camera = new THREE.OrthographicCamera(-68, 68, 50, -50, 1, 350);
   private readonly target = new THREE.Vector3(0, .3, 0);
   private readonly renderer: THREE.WebGLRenderer;
+  private readonly ssaa: SupersampledRenderer;
   private readonly actors = new Map<number, THREE.Group>();
   private fleet: ReturnType<typeof createCarFleet> | undefined;
   private readonly contactShadows = new Map<number, THREE.Mesh>();
@@ -84,6 +86,7 @@ export class RaceSceneRuntime {
   constructor(private readonly gl: ExpoWebGLRenderingContext, private readonly engine: ReplayEngine, private readonly track: TrackData, private readonly callbacks: Callbacks, background: string) {
     this.renderer = makeRenderer(gl);
     this.renderer.setClearColor(background, 1);
+    this.ssaa = createSupersampledRenderer(this.renderer, 2);
     this.camera.position.set(88, 102, 125); this.camera.lookAt(this.target);
     this.scene.add(new THREE.HemisphereLight('#dce5df', '#29342c', 1.35));
     const key = new THREE.DirectionalLight('#fff0d7', 2.8); key.position.set(-45, 100, 75); this.scene.add(key);
@@ -129,7 +132,7 @@ export class RaceSceneRuntime {
     if (w !== this.bufferWidth || h !== this.bufferHeight) {
       this.bufferWidth = w; this.bufferHeight = h;
       Object.assign(this.camera, cameraFrustum(w / h)); this.camera.updateProjectionMatrix();
-      this.renderer.setSize(w, h, false); this.dirty = true;
+      this.renderer.setSize(w, h, false); this.ssaa.setSize(w, h); this.dirty = true;
     }
   }
   private invalidate() { this.dirty = true; this.schedule(); }
@@ -236,7 +239,7 @@ export class RaceSceneRuntime {
         tether.geometry.computeBoundingSphere();
       }
       if (this.dirty || state.playing || moving) {
-        this.renderer.render(this.scene, this.camera);
+        const info = this.ssaa.render(this.scene, this.camera);
         if (!this.reported) {
           const error = this.gl.getError();
           if (error !== this.gl.NO_ERROR) throw new Error(`Native GLES rejected the initial scene (GL error 0x${error.toString(16)}).`);
@@ -244,7 +247,7 @@ export class RaceSceneRuntime {
         this.gl.endFrameEXP(); this.dirty = false;
         if (!this.reported) {
           this.reported = true;
-          this.callbacks.ready({ backend: 'expo-gl', drawCalls: this.renderer.info.render.calls, triangles: this.renderer.info.render.triangles });
+          this.callbacks.ready({ backend: 'expo-gl', drawCalls: info.drawCalls, triangles: info.triangles });
         }
       }
       if (state.playing || moving || this.resizePending > 0) this.schedule();
@@ -283,6 +286,7 @@ export class RaceSceneRuntime {
     this.stopped = true;
     if (this.raf) cancelAnimationFrame(this.raf); this.raf = 0; this.unsubscribe?.();
     disposeTree(this.scene); this.actors.clear(); this.contactShadows.clear(); this.labels.clear(); this.tethers.clear(); this.markers.clear(); this.groupBadges.clear(); this.projectedGroups=[]; this.fleet=undefined;
+    this.ssaa.dispose();
     this.renderer.dispose();
   }
 }

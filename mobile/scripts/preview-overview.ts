@@ -10,6 +10,7 @@ import { carContactShadow, carModel, driverLabel, driverTether, fieldMarker, sel
 import { groupProjectedCars } from '../src/scene/projected-groups';
 import { replayData, replayTrack } from '../src/state/fixture';
 import { ReplayEngine } from '../src/replay';
+import { createSupersampledRenderer } from '../src/scene/supersample';
 
 const WIDTH = 1080, HEIGHT = 956;
 const engine = new ReplayEngine(replayData);
@@ -36,7 +37,7 @@ const ring = selectionRing('#BCD5EC'); scene.add(ring);
 
 Object.assign(camera, cameraFrustum(WIDTH / HEIGHT));
 const badgeCache = new Map<string, THREE.Sprite>();
-function draw(goal: CameraGoal, time = 74.5, selected = 4) {
+function draw(goal: CameraGoal, time = 74.5, selected = 4, target = renderer, ssaa?: ReturnType<typeof createSupersampledRenderer>) {
   engine.seek(time); engine.setCamera('overview');
   for (const [number, actor] of actors) {
     const route = engine.driverSnapshot(number, time)?.route;
@@ -88,8 +89,8 @@ function draw(goal: CameraGoal, time = 74.5, selected = 4) {
     const to = actor.position.clone().addScaledVector(screenUp, 17 * unitsPerPoint);
     points.setXYZ(0, from.x, from.y, from.z); points.setXYZ(1, to.x, to.y, to.z); points.needsUpdate = true;
   }
-  renderer.render(scene, camera);
-  return renderer.domElement;
+  if (ssaa) ssaa.render(scene, camera); else target.render(scene, camera);
+  return target.domElement;
 }
 
 const panels: [string, CameraGoal][] = [
@@ -107,5 +108,13 @@ panels.forEach(([, goal], index) => {
   context.fillText(`${panels[index][0]} · zoom ${goal.zoom.toFixed(2)}`, index * cellW + 10, 23);
 });
 const full = draw(overviewGoal(replayTrack, WIDTH / HEIGHT));
-Object.assign(window, { REVIEW: compose.toDataURL('image/png'), FULL: full.toDataURL('image/png') });
+// Same scene through the native 2x supersampling path. Browser-only proof of
+// the resolve shader; it is not a device performance or presentation claim.
+const ssaaRenderer = new THREE.WebGLRenderer({ antialias: false, alpha: false, preserveDrawingBuffer: true });
+ssaaRenderer.setPixelRatio(1); ssaaRenderer.setSize(WIDTH, HEIGHT, false);
+ssaaRenderer.setClearColor('#101719'); ssaaRenderer.toneMapping = THREE.ACESFilmicToneMapping; ssaaRenderer.toneMappingExposure = 1.08;
+const ssaa = createSupersampledRenderer(ssaaRenderer, 2);
+ssaa.setSize(WIDTH, HEIGHT);
+const ssaaFull = draw(overviewGoal(replayTrack, WIDTH / HEIGHT), 74.5, 4, ssaaRenderer, ssaa);
+Object.assign(window, { REVIEW: compose.toDataURL('image/png'), FULL: full.toDataURL('image/png'), SSAA: ssaaFull.toDataURL('image/png') });
 console.log('ART_REVIEW_ONLY', JSON.stringify({ width: WIDTH, height: HEIGHT, panels: panels.map(([name, goal]) => ({ name, zoom: goal.zoom })) }));

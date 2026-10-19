@@ -49,7 +49,7 @@ Round1 asks: better material separation, smaller selected labels/stems, tighter 
 
 ## Remaining quality work
 
-This is a visible improvement pass, not final art acceptance. Selected cars still compete with broad ground and generic planting at some phases. Architecture and surface materials can be more distinctive without adding random detail. Fine road-edge aliasing needs a supported, measured native antialiasing solution; no fake extension or unmeasured supersampling claim. Battle needs a broader set of actual time/driver pairs tested before its composition is considered finished. Native FPS, thermals, camera feel, gestures and accessibility require separate acceptance.
+This is a visible improvement pass, not final art acceptance. Selected cars still compete with broad ground and generic planting at some phases. Architecture and surface materials can be more distinctive without adding random detail. Fine road-edge aliasing now has a measured 2× render-target supersample path (see `RENDER-STABILITY.md`); Note20 capture and GPU pacing of that path remain open. Battle needs a broader set of actual time/driver pairs tested before its composition is considered finished. Native FPS, thermals, camera feel, gestures and accessibility require separate acceptance.
 
 ## Reproduce assets
 

@@ -62,6 +62,26 @@ Battery temperature was 35.8°C before and 35.9°C after the 100s SSAA run. That
 battery temperature on a phone held at 100% charge, **not** a SoC/GPU thermal
 measurement.
 
+## 1.5× factor experiment
+
+A 1.5× target was built from the same source and measured against 2× on the same
+device, scene and crop.
+
+| metric | 2× | 1.5× |
+| --- | ---: | ---: |
+| hard-step fraction | 0.2979 | 0.2946 |
+| mean edge length | 2.529 px | 2.666 px |
+| GPU p95, 100s | 16 ms | 11–12 ms |
+| janky, 100s | 3.99% | 1.23% / 4.04% (two runs) |
+
+The 4× nearest panel `alias-2x-vs-1.5x-panel.png` shows the 1.5× resolve is
+visibly softer on kerbs and road edges. End-to-end jank was not consistently
+better, because the compositor/UI path dominates; the lower GPU cost did not
+translate into a reliable smoothness win. **2× remains shipped** for sharpness.
+1.5× is retained as the lower-GPU fallback if thermal testing demands it. Raw
+logs: `pacing-1.5x-*.txt`. The comparison 2× capture is
+`overview-2x-driver18.png`.
+
 ## Blackout sweep
 
 `scripts/capture_replay_sweep.py` recorded the 120s excerpt with Follow/Battle/

@@ -17,7 +17,7 @@ Verified on a physical Samsung Note 20 5G (Android 13, release APK):
 Not yet established:
 
 - iOS device behaviour. Simulator moving-replay presentation is a known EXGL limitation; no physical iPhone has run the app.
-- Sustained 2× SSAA performance and SoC thermals beyond the 100s aggregate run. The pacing figure is HWUI/GPU contention, not a Perfetto GPU trace; there is no 1.5×/adaptive mode.
+- Sustained 2× SSAA performance and SoC thermals beyond the 100s aggregate run. The pacing figure is HWUI/GPU contention, not a Perfetto GPU trace; a 1.5× experiment traded sharpness for GPU headroom without a consistent jank win, and no adaptive mode is shipped.
 - A GPU-trace-level profile, p99 hitches, intermittent blackouts, ghosting, and any device beyond the one test handset.
 
 No store submission. The local APK is debug-key signed — not a Play Store artifact. No live-data integration and no commercial rights clearance; see `REFERENCES.md`.

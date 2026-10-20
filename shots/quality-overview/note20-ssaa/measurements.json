@@ -11,7 +11,12 @@
     "installedHashVerified": true
   },
   "aliasing": {
-    "crop": [0, 527, 1080, 1483],
+    "crop": [
+      0,
+      527,
+      1080,
+      1483
+    ],
     "beforeSSAA": {
       "device": "Note20",
       "edgeRuns": 30658,
@@ -35,9 +40,18 @@
     "movingFieldChangedPixels": 324496,
     "terrainCoverage": 0.546496,
     "orbitVisibility": {
-      "follow": { "terrain": 0.648, "dark": 0.307 },
-      "lowOrbit": { "terrain": 0.702, "dark": 0.25 },
-      "battle": { "terrain": 0.806, "dark": 0.104 }
+      "follow": {
+        "terrain": 0.648,
+        "dark": 0.307
+      },
+      "lowOrbit": {
+        "terrain": 0.702,
+        "dark": 0.25
+      },
+      "battle": {
+        "terrain": 0.806,
+        "dark": 0.104
+      }
     }
   },
   "presentationPacing": {
@@ -102,12 +116,48 @@
         "frameDeadlineMissed": 227
       }
     },
-    "batteryTemperatureC": { "before": 35.8, "after": 35.9 },
+    "batteryTemperatureC": {
+      "before": 35.8,
+      "after": 35.9
+    },
     "temperatureNote": "Battery temperature at 100% charge; not a SoC/GPU thermal measurement"
   },
   "limits": [
     "gfxinfo is an HWUI/compositor aggregate, not a GPU trace or GL-thread frame counter",
     "frame p95 is 24ms at 60Hz (16.7ms budget); do not claim 60fps",
     "sustained SoC/GPU thermals, other Android devices, physical iPhone and accessibility remain unverified"
-  ]
+  ],
+  "factorExperiment": {
+    "date": "2026-10-20",
+    "note": "Built from the same source with factor 1.5; measured against 2x on the same device, scene and crop.",
+    "aliasing": {
+      "2x": {
+        "hardStepFraction": 0.2979,
+        "meanEdgeLengthPx": 2.529
+      },
+      "1.5x": {
+        "hardStepFraction": 0.2946,
+        "meanEdgeLengthPx": 2.666
+      }
+    },
+    "pacing100s": {
+      "2x": {
+        "jankyPct": 3.99,
+        "gpuP95Ms": 16,
+        "frameP95Ms": 24
+      },
+      "1.5xRun1": {
+        "jankyPct": 1.23,
+        "gpuP95Ms": 11,
+        "frameP95Ms": 18
+      },
+      "1.5xRun2": {
+        "jankyPct": 4.04,
+        "gpuP95Ms": 12,
+        "frameP95Ms": 23
+      }
+    },
+    "visual": "1.5x is visibly softer on kerbs and road edges at 4x; see alias-2x-vs-1.5x-panel.png",
+    "decision": "Keep 2x for sharpness. End-to-end jank is noisy and not consistently better at 1.5x; retain 1.5x as a thermal fallback."
+  }
 }

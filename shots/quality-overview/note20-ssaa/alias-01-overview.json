@@ -1,0 +1,9 @@
+{
+  "device": "/Users/pratikrai/Development/vantage/shots/quality-overview/note20-ssaa/01-overview.png",
+  "metrics": {
+    "edge_runs": 27157,
+    "hard_step_fraction": 0.2978,
+    "mean_edge_length_px": 2.534,
+    "mean_max_step_fraction": 0.6518
+  }
+}

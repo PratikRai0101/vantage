@@ -23,7 +23,8 @@ xcrun simctl launch booted dev.vantage.spectator
 
 # Working JDK + Android SDK required. Export JAVA_HOME, PATH and ANDROID_HOME first.
 npm run build:android
-# builds/vantage-ssaa.apk — local testing key, NOT Play Store signing
+# builds/vantage-replay.apk — local testing key, NOT Play Store signing
+# The verified SSAA snapshot is preserved as builds/vantage-ssaa.apk.
 ```
 
 Native folders are CNG-generated from `app.json`; do not hand-edit them. The simulator `.app` cannot be installed on a physical iPhone. Device distribution needs appropriate Apple signing. Logs/artifacts are ignored by Git.
@@ -38,7 +39,7 @@ Native folders are CNG-generated from `app.json`; do not hand-edit them. The sim
 - Automatic dark/light semantic UI colors, bundled IBM Plex Mono, system-native labels and tabs.
 - App backgrounding pauses replay; returning does not silently resume it. Hidden/idle scene rendering is suspended.
 - Explicit rendering failures, not a screenshot fallback.
-- 2× render-target supersampling for the native scene (sRGB target, linear then direct fallback).
+- 2× render-target supersampling for the native scene (sRGB target, linear then direct fallback). Verified on the Note20: hard-step 0.640 → 0.298, and the camera/motion gate passes. It roughly doubles measured GPU frame cost, so 60fps is not claimed despite the similar average frame count.
 
 Native capture links seed existing state once, for example:
 
@@ -53,7 +54,7 @@ The links are repeatable state inputs, **not a substitute for touch/VoiceOver te
 ## Honest limits
 
 - See `../NATIVE-VALIDATION.md` for the actual build/runtime evidence and remaining device gates. Compile/test success alone does not prove native 3D rendering.
-- Physical iPhone/Android performance, GPU presentation timing, thermals, sustained playback, gestures, haptics, VoiceOver/TalkBack, large text and Android rendering need real-device acceptance.
+- Physical iPhone performance, a GPU-trace/thermal profile, sustained playback beyond 100s, gestures, haptics, VoiceOver/TalkBack, large text and other Android devices need real-device acceptance. Note20 aggregate pacing is in `../RENDER-STABILITY.md`; it is not a GPU trace.
 - Geometry, elevation, racing lanes and pit paths are illustrative; route projection is not surveyed positioning. No exact contact/overtake claims, simulated fuel, tyre temperature or battery data.
 - No accounts, billing, licensed live feeds or production backend yet.
 - `npm audit` currently reports 27 advisories (8 moderate, 19 high). Do not force incompatible Expo downgrades. Assess advisory reachability and adopt compatible upstream patches before production.

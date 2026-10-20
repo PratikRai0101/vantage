@@ -1,0 +1,21 @@
+{
+  "generatedUTC": "2026-10-20T06:24:00Z",
+  "build": {
+    "path": "mobile/builds/vantage-ssaa.apk",
+    "sha256": "63e16c33f7c2a3d9f53b5ec760a4afed4652d8943e8beb4f776d92f46230514f"
+  },
+  "recording": {
+    "path": "mobile/build-logs/ssaa-sweep/sweep.mp4 (not tracked)",
+    "durationSeconds": 130,
+    "validWindowSeconds": 110,
+    "excludedTail": "The handset was foregrounded to WhatsApp/Instagram from about 110s. The 119-121s blackout hits are other apps, not Vantage; they are excluded."
+  },
+  "samplingHz": 4,
+  "samples": 440,
+  "worstTerrain": 0.3980,
+  "worstDark": 0.5288,
+  "suspectSeconds": [],
+  "cameras": ["follow", "battle", "overview", "follow", "battle", "overview", "follow"],
+  "captures": ["sweep-92s-overview.png", "sweep-108s-follow.png"],
+  "limits": "4Hz sampling catches outages of roughly 250ms or longer. Shorter faults, ghosting and GPU pacing are not excluded."
+}

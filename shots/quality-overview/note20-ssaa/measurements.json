@@ -1,0 +1,113 @@
+{
+  "generatedUTC": "2026-10-20T06:21:29Z",
+  "device": {
+    "model": "Samsung Galaxy Note20 5G SM-N981U1",
+    "android": "13",
+    "display": "1080x2400 @ 60.000004 Hz, 450 dpi"
+  },
+  "apk": {
+    "path": "mobile/builds/vantage-ssaa.apk",
+    "sha256": "63e16c33f7c2a3d9f53b5ec760a4afed4652d8943e8beb4f776d92f46230514f",
+    "installedHashVerified": true
+  },
+  "aliasing": {
+    "crop": [0, 527, 1080, 1483],
+    "beforeSSAA": {
+      "device": "Note20",
+      "edgeRuns": 30658,
+      "hardStepFraction": 0.6404,
+      "meanEdgeLengthPx": 1.648
+    },
+    "ssaa": {
+      "device": "Note20",
+      "edgeRuns": 27157,
+      "hardStepFraction": 0.2978,
+      "meanEdgeLengthPx": 2.534
+    },
+    "browserMSAA4xReference": {
+      "edgeRuns": 14946,
+      "hardStepFraction": 0.2392,
+      "meanEdgeLengthPx": 2.551
+    }
+  },
+  "nativeGates": {
+    "cameraChangedPixels": 359314,
+    "movingFieldChangedPixels": 324496,
+    "terrainCoverage": 0.546496,
+    "orbitVisibility": {
+      "follow": { "terrain": 0.648, "dark": 0.307 },
+      "lowOrbit": { "terrain": 0.702, "dark": 0.25 },
+      "battle": { "terrain": 0.806, "dark": 0.104 }
+    }
+  },
+  "presentationPacing": {
+    "method": "dumpsys gfxinfo aggregate after 8s settle; Follow, driver 18, 1x; not a Perfetto/GL-thread trace",
+    "window30s": {
+      "beforeSSAA": {
+        "frames": 1746,
+        "jankyPct": 0.86,
+        "frameP50": 8,
+        "frameP90": 13,
+        "frameP95": 14,
+        "frameP99": 17,
+        "gpuP50": 2,
+        "gpuP90": 4,
+        "gpuP95": 6,
+        "gpuP99": 8,
+        "missedVsync": 0
+      },
+      "ssaa": {
+        "frames": 1717,
+        "jankyPct": 3.15,
+        "frameP50": 9,
+        "frameP90": 22,
+        "frameP95": 24,
+        "frameP99": 32,
+        "gpuP50": 2,
+        "gpuP90": 14,
+        "gpuP95": 16,
+        "gpuP99": 18,
+        "missedVsync": 1
+      }
+    },
+    "window100s": {
+      "beforeSSAA": {
+        "frames": 5653,
+        "averageFps": 56.53,
+        "jankyPct": 1.72,
+        "frameP50": 9,
+        "frameP90": 16,
+        "frameP95": 17,
+        "frameP99": 29,
+        "gpuP50": 2,
+        "gpuP90": 7,
+        "gpuP95": 9,
+        "gpuP99": 10,
+        "missedVsync": 0,
+        "frameDeadlineMissed": 97
+      },
+      "ssaa": {
+        "frames": 5686,
+        "averageFps": 56.86,
+        "jankyPct": 3.99,
+        "frameP50": 9,
+        "frameP90": 23,
+        "frameP95": 24,
+        "frameP99": 34,
+        "gpuP50": 2,
+        "gpuP90": 14,
+        "gpuP95": 16,
+        "gpuP99": 18,
+        "missedVsync": 11,
+        "frameDeadlineMissed": 227
+      }
+    },
+    "batteryTemperatureC": { "before": 35.8, "after": 35.9 },
+    "temperatureNote": "Battery temperature at 100% charge; not a SoC/GPU thermal measurement"
+  },
+  "limits": [
+    "gfxinfo is an HWUI/compositor aggregate, not a GPU trace or GL-thread frame counter",
+    "frame p95 is 24ms at 60Hz (16.7ms budget); do not claim 60fps",
+    "sustained SoC/GPU thermals, other Android devices, physical iPhone and accessibility remain unverified"
+  ]
+}

@@ -85,8 +85,20 @@ The browser harness now renders the same frame through this path as well (`windo
 ### Verification
 
 - **Android emulator** (Pixel 10, API 37, GLES through ANGLE): before/after APKs on the same overview screen and the same crop give hard-step fraction **0.611 → 0.285** and mean edge length **1.70 → 2.53 px**. Full captures are `shots/quality-overview/emulator-before-ssaa.png` and `emulator-after-ssaa.png`; the 4× crop is `alias-emulator-panel.png`.
-- **Note20**: final APK `builds/vantage-ssaa.apk` is installed (SHA-256 `63e16c33f7c2a3d9f53b5ec760a4afed4652d8943e8beb4f776d92f46230514f`), but the handset was locked at verification time, so the device capture is **pending**. The prior Note20 build is preserved as `builds/vantage-before-ssaa.apk`.
-- **Cost**: 2× SSAA is four times the fragment work plus one resolve pass. GPU/present pacing and thermals were not measured; do not claim 60 fps or performance parity from the emulator.
+- **Note20** (SM-N981U1, Android 13, 1080×2400 at 60Hz): the installed `builds/vantage-ssaa.apk` (SHA-256 `63e16c33f7c2a3d9f53b5ec760a4afed4652d8943e8beb4f776d92f46230514f`) passes the same crop. Hard-step fraction is **0.6404 → 0.2978** and mean edge length **1.648 → 2.534 px**, against **0.2392 / 2.551 px** for the browser 4× MSAA reference. The prior Note20 build remains available as `builds/vantage-before-ssaa.apk`.
+- **Motion and cameras on the SSAA build**: 359,314 camera-changed / 324,496 moving-field-changed pixels, with 54.65% terrain coverage. Overview, Follow, Battle and low-orbit captures all pass their retained gates.
+- **Cost** (same 100s Follow playback at 1×, identical `dumpsys gfxinfo` procedure before and after, 60Hz panel):
+
+| 100s playback | before SSAA | 2× SSAA |
+| --- | ---: | ---: |
+| total frames | 5,653 (56.5 fps) | 5,686 (56.9 fps) |
+| janky frames | 1.72% | 3.99% |
+| frame p90 / p95 / p99 | 16 / 17 / 29 ms | 23 / 24 / 34 ms |
+| GPU p90 / p95 / p99 | 7 / 9 / 10 ms | 14 / 16 / 18 ms |
+| missed vsync | 0 | 11 |
+
+The average frame count barely moves, but 2× SSAA roughly doubles measured GPU frame cost and raises late frames from 1.72% to 3.99%; p95 exceeds the 16.7ms 60Hz budget. The 30s pair agrees (0.86% → 3.15% janky, GPU p95 6 → 16ms). **Do not claim 60 fps.** These are HWUI/compositor aggregates including shared-GPU contention, not a Perfetto GPU trace or a GL-thread frame counter. Battery temperature was 35.8°C → 35.9°C over the 100s run, which is not a SoC/GPU thermal measurement. Evidence and raw extracts: `shots/quality-overview/note20-ssaa/`.
+- **Blackout sweep on the SSAA build**: 110s of the 120s excerpt with Follow/Battle/Overview changes, 440 samples at 4Hz, no sustained all-black scene (worst terrain 39.8%, worst dark 52.9%). The last 10s were excluded because the handset was foregrounded to another app. Shorter faults and ghosting are not excluded. Summary: `shots/quality-overview/note20-ssaa/sweep-summary.json`.
 
 ## Runtime verification
 
@@ -99,12 +111,12 @@ The browser harness now renders the same frame through this path as well (`windo
 
 ## Still open
 
-- Intermittent complete material/scene blackouts were not reproduced in this bounded run; need exact triggering camera/time/action or a recording if they recur.
+- Intermittent complete material/scene blackouts were not reproduced in this bounded run; need exact triggering camera/time/action or a recording if they recur. The SSAA sweep adds another 110s camera-changing pass with no sustained blackout (4Hz sampling; the last 10s are excluded because another app was foregrounded).
 - Ghosting/noise may include surface/depth aliasing, context presentation or temporal hold; not isolated yet. No temporal accumulation or motion blur added as camouflage.
-- Overview framing is fitted and device-verified, but Follow/Battle re-capture after that change is still outstanding. The 2× SSAA path is built and emulator-verified; Note20 capture and GPU pacing remain open.
+- Overview framing and Follow/Battle are re-captured after the fit on the SSAA build. The 2× SSAA path is device-verified for image quality and native motion; its frame cost is now measured (p95 24ms at 60Hz). Sustained SoC/GPU thermal profiling remains open.
 - Car-to-car display intersections are now suppressed using counted projection groups, not invented lanes/contact. This is a display reconstruction rule, not proof about physical race proximity. Other environmental intersections still need individual geometry inspection.
-- Short unrecorded CPU measurements improved after car batching (details below), but long callback gaps remain. Sustained GPU/presentation profiling is still required; neither recording intervals nor JS CPU timings prove GPU FPS.
-- Car aesthetics, refined materials/lighting, supported antialiasing and optional cinematic blur remain work. Fixing inverted normals improves visibility but is not a finished car-design pass.
+- Short unrecorded CPU measurements improved after car batching (details below), but long callback gaps remain. Aggregate HWUI/GPU pacing is now measured; a sustained GPU-trace profile is still required, and neither recording intervals nor JS CPU timings prove GPU FPS.
+- Car aesthetics, refined materials/lighting and optional cinematic blur remain work. SSAA is device-verified, but this is not a finished antialiasing policy: there is no 1.5×/adaptive-resolution escape hatch if sustained GPU cost becomes a problem. Fixing inverted normals improves visibility but is not a finished car-design pass.
 - iOS physical-device validation and earlier simulator presentation problem remain separate.
 
 ## Reproduce
@@ -114,6 +126,9 @@ From `mobile/`, authorized Note20, installed release build:
 ```sh
 python3 scripts/capture_android_render.py
 python3 scripts/assert_orbit_visibility.py build-logs/render-repro/04-low-orbit.png
+# image quality and aggregate pacing on the installed build
+python3 scripts/measure_aliasing.py ../shots/quality-overview/note20-ssaa/01-overview.png --crop 0,527,1080,1483
+bash scripts/measure_presentation_pacing.sh ssaa 100
 npm run check
 # overview framing art review (browser only, not native acceptance)
 ./node_modules/.bin/esbuild scripts/preview-overview.ts --bundle --format=esm --target=es2022 \

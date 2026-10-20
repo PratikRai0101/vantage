@@ -8,15 +8,17 @@ Verified on a physical Samsung Note 20 5G (Android 13, release APK):
 
 - Native Race / Timing / Lab screens, the shared replay engine and Overview / Follow / Battle cameras.
 - Startup, camera change and moving-field pixel gates pass — real GL-region comparisons, not UI-only checks.
-- Task/timing pacing and the overview framing fix are measured on-device (`RENDER-STABILITY.md`).
-- 2× supersampling in the native renderer (sRGB target, linear then direct fallback). Verified on an Android emulator; Note20 capture is pending.
+- Task/timing pacing, the overview framing fix and 2× SSAA are measured on-device (`RENDER-STABILITY.md`).
+- 2× supersampling in the native renderer (sRGB target, linear then direct fallback) cuts the Note20 hard-step fraction 0.640 → 0.298. It roughly doubles measured GPU frame cost; 100s playback is 3.99% janky vs 1.72% without it, so 60fps is not claimed.
+- Follow/Battle re-captured after the framing change; the camera/motion gate passes on the SSAA build (359,314 / 324,496 changed pixels).
+- 110s SSAA camera sweep: no sustained blackout in the sampled recording (4Hz; shorter faults and ghosting are not excluded).
 - `cd mobile && npm run check` — TypeScript, ESLint and 39 pure tests pass.
 
 Not yet established:
 
 - iOS device behaviour. Simulator moving-replay presentation is a known EXGL limitation; no physical iPhone has run the app.
-- Note20 acceptance and GPU pacing of the 2× SSAA path. The emulator is a GLES/ANGLE check, not a device performance result; hardware MSAA remains unavailable in Expo GL on Android.
-- GPU presentation timing, thermals, p99 frame hitches, intermittent blackouts, ghosting, and any device beyond the one test handset.
+- Sustained 2× SSAA performance and SoC thermals beyond the 100s aggregate run. The pacing figure is HWUI/GPU contention, not a Perfetto GPU trace; there is no 1.5×/adaptive mode.
+- A GPU-trace-level profile, p99 hitches, intermittent blackouts, ghosting, and any device beyond the one test handset.
 
 No store submission. The local APK is debug-key signed — not a Play Store artifact. No live-data integration and no commercial rights clearance; see `REFERENCES.md`.
 

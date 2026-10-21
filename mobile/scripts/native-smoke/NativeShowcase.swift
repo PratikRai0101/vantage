@@ -9,14 +9,14 @@ final class NativeShowcase: XCTestCase {
   }
   func marker(_ name: String) {
     let folder = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    try! Data(Date().description.utf8).write(to: folder.appendingPathComponent("vantage_capture_" + name))
+    try! Data(String(Date().timeIntervalSince1970).utf8).write(to: folder.appendingPathComponent("vantage_capture_" + name))
   }
   func button(_ prefix: String) -> XCUIElement {
     app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", prefix)).firstMatch
   }
   override func setUpWithError() throws {
     continueAfterFailure = false
-    app.activate()
+    app.launch()
     let spring = XCUIApplication(bundleIdentifier: "com.apple.springboard")
     if spring.alerts.buttons["Open"].exists { spring.alerts.buttons["Open"].tap() }
     if app.alerts.buttons["Open"].exists { app.alerts.buttons["Open"].tap() }
@@ -41,38 +41,38 @@ final class NativeShowcase: XCTestCase {
     XCTAssertTrue(app.staticTexts["Loading native circuit…"].waitForNonExistence(timeout: 20))
     app.buttons["All cars"].tap(); pause(0.5); shot("07-return")
   }
-  func testShortVideo() {
+  // One uncut demonstration: preserve every real tap, camera move, sheet and scroll.
+  func testHandsOnVideo() {
+    marker("start")
+    pause(0.4)
     app.buttons["Play replay"].tap()
-    marker("start"); pause(1.4)
-    pause(1.6)
-    app.buttons["Follow"].tap(); pause(1.4)
-    app.coordinate(withNormalizedOffset: CGVector(dx: 0.66, dy: 0.37))
-      .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.47, dy: 0.40)))
-    app.buttons["Reset camera"].tap()
-    app.buttons["Battle"].tap(); pause(1.5)
-    button("Playback speed").tap(); app.buttons["2×"].tap(); pause(1.4)
-    app.tabBars.buttons["Timing"].tap(); pause(1.2)
-    app.buttons["Interval"].tap(); pause(1.0)
-    app.buttons["Gap"].tap(); pause(0.8)
-    let lec = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Charles LECLERC")).firstMatch
-    if lec.isHittable { lec.tap() }
-    pause(0.8)
-    app.tabBars.buttons["Lab"].tap(); pause(1.2)
-    button("Comparison driver").tap(); pause(0.8)
-    let nor = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Lando NORRIS,")).firstMatch
-    nor.tap(); pause(0.8)
-    let chart = app.descendants(matching: .any).matching(NSPredicate(format: "label BEGINSWITH %@", "Recorded speed comparison")).firstMatch
-    chart.coordinate(withNormalizedOffset: CGVector(dx: 0.62, dy: 0.5)).tap()
-    pause(0.5)
-    if app.buttons["Play replay"].exists { app.buttons["Play replay"].tap() }
-    pause(1.2)
-    app.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.82))
-      .press(forDuration: 0.05, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.30)))
-    pause(1.4)
-    app.tabBars.buttons["Race"].tap(); pause(1.2)
-    app.buttons["All cars"].tap(); pause(1.0)
-    if app.buttons["Play replay"].exists { app.buttons["Play replay"].tap() }
-    pause(2.6)
+    marker("overview"); pause(2.4)
+    marker("follow_action")
+    app.buttons["Follow"].tap()
+    marker("follow"); pause(2.5)
+    marker("battle_action")
+    app.buttons["Battle"].tap()
+    marker("battle"); pause(2.5)
+    marker("timing_action")
+    app.tabBars.buttons["Timing"].tap()
+    marker("timing"); pause(2.0)
+    app.buttons["Interval"].tap(); pause(1.8)
+    marker("lab_action")
+    app.tabBars.buttons["Lab"].tap()
+    marker("lab"); pause(2.3)
+    marker("comparison_action")
+    button("Comparison driver").tap()
+    marker("comparison"); pause(1.8)
+    app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Carlos SAINZ,")).firstMatch.tap()
+    marker("compared"); pause(1.8)
+    marker("scroll_action")
+    app.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.81))
+      .press(forDuration: 0.15, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.30)), withVelocity: .slow, thenHoldForDuration: 0.1)
+    marker("telemetry"); pause(2.4)
+    marker("return_action")
+    app.tabBars.buttons["Race"].tap()
+    app.buttons["All cars"].tap()
+    marker("closing"); pause(3.2)
     marker("end")
   }
 }

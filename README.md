@@ -29,8 +29,8 @@ Vantage is a real-time 3D Formula 1 replay app. The native client in `mobile/` (
 </p>
 
 <p align="center">
-  <a href="Showcase/vantage-demo-framed.mp4"><strong>Watch the 34-second demo</strong></a><br />
-  <sub>Native iOS · One continuous take · Normal speed · MP4 2.1 MB</sub>
+  <a href="Showcase/vantage-demo-framed.mp4"><strong>Watch the 37-second hands-on demo</strong></a><br />
+  <sub>Native iOS · 60 fps · One continuous take · Real taps, camera moves and scrolling</sub>
 </p>
 
 The whole-field overview, Follow and Battle cameras, seeking, 2× speed, Timing,
@@ -115,7 +115,7 @@ No store submission. The local APK is debug-key signed — not a Play Store arti
 | `assets/` | Editable 3D circuit sources (`.blend`), renders, fonts and licences. |
 | `shots/` | Dated visual evidence: design sheets, device captures, measured before/after pairs. |
 | `Screenshots/framed/` | Framed iPhone 17 Pro screenshots used by the README. Raw captures live in `shots/ios-showcase/`. |
-| `Showcase/` | 34-second framed iPhone Simulator walkthrough, GIF preview and capture provenance. |
+| `Showcase/` | 37-second continuous, hands-on iPhone Simulator walkthrough, GIF preview and capture provenance. |
 | `references/` | Primary-source research material. |
 | `scripts/` | Python scene-render and design-validation scripts. |
 

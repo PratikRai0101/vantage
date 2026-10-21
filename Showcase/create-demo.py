@@ -1,7 +1,9 @@
 """Draw Monolith's iPhone 17 Pro frame around Vantage's real iOS captures.
 
-Both published forms come from one decoded frame set, so the framed and
-frameless files carry the identical sequence in the identical order.
+Both published forms come from one continuous take, with every actual tap,
+camera move, tab change, sheet animation and scroll left intact. No internal
+cuts, dissolves or retiming. Source PTS, not faulty simulator DTS, determines
+presentation timing. Both exports carry the identical frames in identical order.
 
 The frame is a static titanium band and black glass drawn around the capture.
 The app pixels inside it are copied through untouched; only the four screen
@@ -19,17 +21,20 @@ ROOT = Path(__file__).resolve().parents[1]
 DEMO = ROOT / 'Showcase'
 SHOTS = ROOT / 'shots/ios-showcase'
 FRAMED_SHOTS = ROOT / 'Screenshots/framed'
-SOURCE = ROOT / 'mobile/build-logs/ios-showcase/short-raw-2.mp4'
+SOURCE = ROOT / 'mobile/build-logs/ios-showcase/hands-on-raw.mp4'
+TIMELINE = SOURCE.with_name('hands-on-timeline.json')
 CAPTURE_JSON = DEMO / 'vantage-demo.capture.json'
 
 GLASS_PT, BAND_PT = 12.0, 5.0
 DEVICE_RADIUS_PT, SCREEN_RADIUS_PT = 66.0, 55.0
 LOGICAL_W = 402          # iPhone 17 Pro logical width
 SCREEN_OUT_W = 720       # published screen width
-FPS = 30
-SOURCE_START = 17.0      # whole-field overview; trim setup before it
-DURATION = 34.0
-TMP = Path('/tmp/vantage-frame/work')
+FPS = 60
+MARKERS = json.loads(TIMELINE.read_text())['markerOffsetsSeconds']
+SOURCE_START = MARKERS['start']
+FRAME_COUNT = round((MARKERS['end'] - SOURCE_START) * FPS)
+DURATION = FRAME_COUNT / FPS
+TMP = Path('/tmp/vantage-hands-on-frame/work')
 
 STILLS = {
     '01-overview.png': '01-race-overview.png',
@@ -97,38 +102,6 @@ def build_stills():
         print('framed', target)
 
 
-def decode_frames(source: Path, out_dir: Path, width: int) -> list:
-    """Decode the trimmed capture to a PNG sequence at the published width."""
-    if out_dir.exists():
-        shutil.rmtree(out_dir)
-    out_dir.mkdir(parents=True)
-    subprocess.run([
-        'ffmpeg', '-y', '-v', 'error', '-ss', str(SOURCE_START), '-i', str(source),
-        '-t', str(DURATION), '-vf', f'fps={FPS},scale={width}:-2:flags=lanczos',
-        '-r', str(FPS), str(out_dir / '%05d.png')], check=True)
-    return sorted(out_dir.glob('*.png'))
-
-
-def encode_from_frames(files: list, out: Path, compose=None, crf: int = 21):
-    """Encode a PNG sequence, optionally compositing each frame first."""
-    TMP.mkdir(parents=True, exist_ok=True)
-    staged = TMP / 'staged'
-    if staged.exists():
-        shutil.rmtree(staged)
-    staged.mkdir(parents=True)
-    for i, f in enumerate(files):
-        im = Image.open(f).convert('RGB')
-        if compose:
-            im = compose(im)
-        im.save(staged / f'{i:05d}.png')
-    subprocess.run([
-        'ffmpeg', '-y', '-v', 'error', '-framerate', str(FPS), '-i', str(staged / '%05d.png'),
-        '-an', '-map_metadata', '-1', '-map_chapters', '-1',
-        '-c:v', 'libx264', '-preset', 'slow', '-crf', str(crf), '-pix_fmt', 'yuv420p',
-        '-movflags', '+faststart', '-threads', '4', str(out)], check=True)
-    return out
-
-
 def probe(path: Path) -> dict:
     data = json.loads(subprocess.check_output([
         'ffprobe', '-v', 'error', '-show_entries',
@@ -176,26 +149,43 @@ def app_region_diff(framed: Path, frameless: Path, off: int) -> dict:
 
 
 def build_videos():
-    files = decode_frames(SOURCE, TMP / 'screen', SCREEN_OUT_W)
-    sw, sh = Image.open(files[0]).size
+    """Decode once; preserve the complete interaction timeline in both outputs.
+
+    Ignoring conflicting simulator DTS is essential: default best-effort decoding
+    previously dropped real motion and padded the tail with frozen frames.
+    Trim only after decoding. A split feeds identical frames to both encoders;
+    the static frame and screen mask are composited without re-rendering app UI.
+    """
+    TMP.mkdir(parents=True, exist_ok=True)
+    sw, sh = SCREEN_OUT_W, 1566
     frame, mask, off = frame_parts(sw, sh)
-
-    def compose(im):
-        canvas = frame.copy()
-        canvas.paste(im, (off, off), mask)
-        return canvas
-
-    encode_from_frames(files, DEMO / 'vantage-demo.mp4', crf=23)
-    encode_from_frames(files, DEMO / 'vantage-demo-framed.mp4', compose=compose, crf=23)
-    return len(files), off
+    frame.save(TMP / 'device.png')
+    mask.save(TMP / 'mask.png')
+    filters = (
+        f'[0:v]trim=start={SOURCE_START}:duration={DURATION},setpts=PTS-STARTPTS,'
+        f'fps={FPS},scale={sw}:{sh}:flags=lanczos,split=2[plain][screen];'
+        f'[screen][2:v]alphamerge[rounded];'
+        f'[1:v][rounded]overlay={off}:{off}:shortest=1:format=auto[framed]'
+    )
+    command = ['ffmpeg', '-y', '-v', 'error', '-fflags', '+igndts', '-i', str(SOURCE),
+               '-loop', '1', '-framerate', str(FPS), '-i', str(TMP / 'device.png'),
+               '-loop', '1', '-framerate', str(FPS), '-i', str(TMP / 'mask.png'),
+               '-filter_complex_threads', '2', '-filter_complex', filters]
+    for stream, name in [('plain', 'vantage-demo.mp4'), ('framed', 'vantage-demo-framed.mp4')]:
+        command += ['-map', f'[{stream}]', '-frames:v', str(FRAME_COUNT), '-an',
+                    '-map_metadata', '-1', '-map_chapters', '-1', '-c:v', 'libx264',
+                    '-preset', 'medium', '-crf', '23', '-pix_fmt', 'yuv420p',
+                    '-movflags', '+faststart', '-threads', '4', str(DEMO / name)]
+    subprocess.run(command, check=True)
+    return FRAME_COUNT, off
 
 
 def build_gifs():
     # Decode the already-trimmed frameless film, so the GIF cannot reintroduce setup.
     source = DEMO / 'vantage-demo.mp4'
     for name, width, fps, colors, out_w, out_h in [
-        ('vantage-demo-framed.gif', 240, 10, 64, 250, 530),
-        ('vantage-demo.gif', 200, 10, 64, 190, 414),
+        ('vantage-demo-framed.gif', 240, 20, 64, 250, 530),
+        ('vantage-demo.gif', 200, 20, 64, 190, 414),
     ]:
         frames = TMP / f'gifsrc-{name}'
         if frames.exists():
@@ -245,7 +235,19 @@ def build_capture(frames: int, off: int):
         result = subprocess.run(['ffmpeg', '-v', 'error', '-i', str(DEMO / name), '-f', 'null', '-'],
                                 capture_output=True, text=True)
         decode_errors[name] = {'exit': result.returncode, 'stderr': result.stderr.strip()}
+    # Exclude deliberate paused opening and tab activation; include both camera
+    # changes and their live reading holds, not just cherry-picked still samples.
+    motion_windows = [
+        f"{MARKERS['overview'] - SOURCE_START + 0.2:.3f}:{MARKERS['timing_action'] - SOURCE_START - 0.2:.3f}",
+        f"{MARKERS['closing'] - SOURCE_START + 0.8:.3f}:{DURATION - 0.1:.3f}",
+    ]
+    motion = {}
+    for name in ('vantage-demo.mp4', 'vantage-demo-framed.mp4'):
+        motion[name] = json.loads(subprocess.check_output([
+            'python3', str(DEMO / 'check-motion.py'), str(DEMO / name),
+            '--windows', ','.join(motion_windows), '--fps', str(FPS)]))
     verification = {
+        'raceMotion': motion,
         'frameCountIdentical': framed['frames'] == plain['frames'] == frames,
         'durationIdentical': abs(framed['durationSeconds'] - plain['durationSeconds']) < 0.001,
         'framedStillInteriorMaxAbsDiff': max_still,
@@ -255,24 +257,32 @@ def build_capture(frames: int, off: int):
         'note': 'Framed stills are byte-identical inside the rounded screen area (max 0). The framed/frameless video difference is H.264 re-encoding noise; only the four screen corners are rounded.',
     }
     capture = {
-        'capture': 'Native iOS Simulator recording; one continuous take, normal speed; head and tail trimmed',
+        'capture': 'Fresh native iOS Simulator recording; one continuous hands-on take at normal speed',
         'device': 'iPhone 17 Pro, iOS 26.5 Simulator (402x874 pt @3x = 1206x2622 px)',
         'sourceCapture': SOURCE.name,
         'sourceSha256': source_sha,
+        'durationSeconds': DURATION,
         'trim': {'startSeconds': SOURCE_START, 'durationSeconds': DURATION},
-        'editing': 'Trim, resize and H.264 compression only. No internal cuts, holds, retiming, scene stitching or speed changes.',
+        'interactionMarkersSeconds': {name: round(value - SOURCE_START, 3)
+                                     for name, value in MARKERS.items()},
+        'transition': 'The app’s own camera easing, button feedback, tab changes, native sheet animation and continuous scroll; no editorial transitions.',
+        'editing': 'Head/tail trim, resize, static device frame and H.264 compression only. No internal cuts, dissolves, speed changes, inserted still holds, touch overlays or fabricated app motion.',
+        'timestampHandling': 'Ignore conflicting source DTS and preserve source PTS (+igndts). Decode from the beginning with output-side trim; encode constant 60fps.',
         'deviceFrame': 'Titanium band + black glass drawn around the capture. The app pixels are copied through untouched; only the 55 pt screen corners are rounded.',
         'exports': {'vantage-demo.mp4': plain, 'vantage-demo-framed.mp4': framed,
                     'vantage-demo-framed.gif': {'width': 250, 'height': 530, 'bytes': (DEMO/'vantage-demo-framed.gif').stat().st_size},
                     'vantage-demo.gif': {'width': 190, 'height': 414, 'bytes': (DEMO/'vantage-demo.gif').stat().st_size}},
         'verification': verification,
     }
+    assert verification['frameCountIdentical'] and verification['durationIdentical'], verification
+    assert verification['fullDecode'] == 'passed', verification
+    assert max_still == 0, verification
     CAPTURE_JSON.write_text(json.dumps(capture, indent=2) + '\n')
     print('capture', CAPTURE_JSON)
 
 
 if __name__ == '__main__':
-    build_stills()
+    # Gallery stills are unchanged; build_stills() remains available separately.
     frames, off = build_videos()
     print('video frames', frames)
     build_gifs()

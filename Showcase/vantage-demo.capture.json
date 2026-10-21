@@ -1,51 +1,134 @@
 {
-  "capture": "Native iOS Simulator recording; one continuous take, normal speed; head and tail trimmed",
+  "capture": "Fresh native iOS Simulator recording; one continuous hands-on take at normal speed",
   "device": "iPhone 17 Pro, iOS 26.5 Simulator (402x874 pt @3x = 1206x2622 px)",
-  "sourceCapture": "short-raw-2.mp4",
-  "sourceSha256": "28084d8a8a350afdf8e8968cbfe4f96a122c0ff8c7d6dbaf89a01448c277b024",
+  "sourceCapture": "hands-on-raw.mp4",
+  "sourceSha256": "16a9d087847db91c0ef9337491a66da9b0d1d3acde6c2ef570a9f61aee8e8272",
+  "durationSeconds": 37.38333333333333,
   "trim": {
-    "startSeconds": 17.0,
-    "durationSeconds": 34.0
+    "startSeconds": 36.5626220703125,
+    "durationSeconds": 37.38333333333333
   },
-  "editing": "Trim, resize and H.264 compression only. No internal cuts, holds, retiming, scene stitching or speed changes.",
+  "interactionMarkersSeconds": {
+    "battle_action": 6.339,
+    "follow_action": 3.273,
+    "start": 0.0,
+    "comparison": 21.333,
+    "battle": 6.887,
+    "lab": 18.185,
+    "compared": 24.122,
+    "return_action": 31.488,
+    "follow": 3.837,
+    "closing": 34.17,
+    "end": 37.379,
+    "scroll_action": 25.924,
+    "timing_action": 9.394,
+    "comparison_action": 20.488,
+    "timing": 11.98,
+    "overview": 0.864,
+    "telemetry": 29.084,
+    "lab_action": 16.238
+  },
+  "transition": "The app\u2019s own camera easing, button feedback, tab changes, native sheet animation and continuous scroll; no editorial transitions.",
+  "editing": "Head/tail trim, resize, static device frame and H.264 compression only. No internal cuts, dissolves, speed changes, inserted still holds, touch overlays or fabricated app motion.",
+  "timestampHandling": "Ignore conflicting source DTS and preserve source PTS (+igndts). Decode from the beginning with output-side trim; encode constant 60fps.",
   "deviceFrame": "Titanium band + black glass drawn around the capture. The app pixels are copied through untouched; only the 55 pt screen corners are rounded.",
   "exports": {
     "vantage-demo.mp4": {
       "width": 720,
       "height": 1566,
-      "fps": "30/1",
-      "frames": 1020,
-      "durationSeconds": 34.0,
-      "bytes": 2074937
+      "fps": "60/1",
+      "frames": 2243,
+      "durationSeconds": 37.383333,
+      "bytes": 2884423
     },
     "vantage-demo-framed.mp4": {
       "width": 780,
       "height": 1626,
-      "fps": "30/1",
-      "frames": 1020,
-      "durationSeconds": 34.0,
-      "bytes": 2156616
+      "fps": "60/1",
+      "frames": 2243,
+      "durationSeconds": 37.383333,
+      "bytes": 3032271
     },
     "vantage-demo-framed.gif": {
       "width": 250,
       "height": 530,
-      "bytes": 1947165
+      "bytes": 4444868
     },
     "vantage-demo.gif": {
       "width": 190,
       "height": 414,
-      "bytes": 1438316
+      "bytes": 3278595
     }
   },
   "verification": {
+    "raceMotion": {
+      "vantage-demo.mp4": {
+        "path": "/Users/pratikrai/Development/vantage/Showcase/vantage-demo.mp4",
+        "maxStillSeconds": 0.3,
+        "windows": [
+          {
+            "window": [
+              1.064,
+              9.194
+            ],
+            "frames": 488,
+            "movingFrameFraction": 0.94,
+            "longestStillSeconds": 0.033,
+            "darkSceneFrames": 0,
+            "passed": true
+          },
+          {
+            "window": [
+              34.97,
+              37.283
+            ],
+            "frames": 138,
+            "movingFrameFraction": 0.927,
+            "longestStillSeconds": 0.083,
+            "darkSceneFrames": 0,
+            "passed": true
+          }
+        ],
+        "passed": true
+      },
+      "vantage-demo-framed.mp4": {
+        "path": "/Users/pratikrai/Development/vantage/Showcase/vantage-demo-framed.mp4",
+        "maxStillSeconds": 0.3,
+        "windows": [
+          {
+            "window": [
+              1.064,
+              9.194
+            ],
+            "frames": 488,
+            "movingFrameFraction": 0.961,
+            "longestStillSeconds": 0.033,
+            "darkSceneFrames": 0,
+            "passed": true
+          },
+          {
+            "window": [
+              34.97,
+              37.283
+            ],
+            "frames": 138,
+            "movingFrameFraction": 0.927,
+            "longestStillSeconds": 0.083,
+            "darkSceneFrames": 0,
+            "passed": true
+          }
+        ],
+        "passed": true
+      }
+    },
     "frameCountIdentical": true,
     "durationIdentical": true,
     "framedStillInteriorMaxAbsDiff": 0,
     "appRegionSampleDiff": {
-      "samples": 68,
-      "meanAbsDiff": 1.752,
-      "maxAbsDiff": 41,
-      "componentsOver3": 10174
+      "samples": 75,
+      "meanAbsDiff": 2.232,
+      "maxAbsDiff": 51,
+      "componentsOver3": 14560
     },
     "fullDecode": "passed",
     "decode": {

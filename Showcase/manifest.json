@@ -1,0 +1,85 @@
+{
+  "title": "Vantage \u2014 native app walkthrough",
+  "durationSeconds": 149.666667,
+  "output": "1920x1080 / H.264 / 30fps container / silent",
+  "capture": "Android API 37 emulator, release APK, genuine Expo GL and React Native UI",
+  "apkSHA256": "f35bbd9d00871952f0be55be601db80ce50046ec61075e02693897cecdbcd483",
+  "frame": "Original iPhone-style vector presentation frame; NOT an iPhone runtime capture",
+  "onboarding": "Not implemented; the video starts at real cold launch, with no invented screens",
+  "editing": "Launcher trimmed; one cross-take cut to grouped selection and appearance. No screenshot-based sequences, optical-flow synthesis or simulated native transitions. Chapter copy fades are editorial.",
+  "cuts": [
+    {
+      "recording": "workflow.mp4",
+      "in": 0.75,
+      "out": 117.5
+    },
+    {
+      "recording": "workflow.mp4",
+      "in": 119,
+      "out": 123
+    },
+    {
+      "recording": "closing.mp4",
+      "in": 0,
+      "out": 29
+    }
+  ],
+  "chapters": [
+    {
+      "seconds": 0,
+      "title": "A race, in miniature.",
+      "features": "Launch + whole-field replay"
+    },
+    {
+      "seconds": 12,
+      "title": "Find your angle.",
+      "features": "Three cameras + native orbit"
+    },
+    {
+      "seconds": 28,
+      "title": "Hold the moment.",
+      "features": "Shared replay clock + seeking"
+    },
+    {
+      "seconds": 46,
+      "title": "Change the pace.",
+      "features": "Playback speed controls"
+    },
+    {
+      "seconds": 60,
+      "title": "Read the race.",
+      "features": "Timing + driver selection"
+    },
+    {
+      "seconds": 77,
+      "title": "Compare the details.",
+      "features": "Lab + comparison + chart seeking"
+    },
+    {
+      "seconds": 99,
+      "title": "Inspect the telemetry.",
+      "features": "Recorded telemetry + source ages"
+    },
+    {
+      "seconds": 114,
+      "title": "Show the limits, too.",
+      "features": "In-app reconstruction disclosure"
+    },
+    {
+      "seconds": 120.75,
+      "title": "Every driver counts.",
+      "features": "Group selection + light / dark"
+    },
+    {
+      "seconds": 137.75,
+      "title": "Back to the field.",
+      "features": "Resume + whole-field finale"
+    }
+  ],
+  "limits": [
+    "No physical iPhone acceptance claim",
+    "Emulator presentation is not a device FPS benchmark",
+    "No audio, music or narration",
+    "Pinch, haptics, screen readers and background recovery are not demonstrated in this film"
+  ]
+}

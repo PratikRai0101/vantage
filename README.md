@@ -16,6 +16,20 @@
 
 Vantage is a real-time 3D Formula 1 replay app. The native client in `mobile/` (Expo SDK 58 · React Native 0.88 · React 19.3) draws a full circuit, the recorded field of 17 moving cars and three camera modes with Expo GL + Three.js — no WebView, no video playback. It replays the 2024 Japanese Grand Prix fixture from documented OpenF1 recordings and follows the product direction approved in `DIRECTION.md`.
 
+## Demo
+
+[![Watch Vantage's full native-app walkthrough in an iPhone-style frame](Showcase/preview.gif)](https://github.com/PratikRai0101/vantage/raw/refs/heads/main/Showcase/vantage-demo.mp4)
+
+**[Watch the 2:30 walkthrough](https://github.com/PratikRai0101/vantage/raw/refs/heads/main/Showcase/vantage-demo.mp4)** · [Video and capture details](Showcase/README.md)
+
+Real screen recording, not a slideshow: launch, moving replay, three cameras,
+orbit/reset, scrubbing, speed selection, Timing, driver comparison, chart seeking,
+telemetry, grouped selection and light/dark appearance. The footage runs on an
+**Android emulator inside an iPhone-style presentation frame**, not an iPhone.
+There is no onboarding in this build; the film begins at the actual cold launch.
+It includes the updated scrubber and compact Timing/Lab layout; the physical-device
+stills below are from the earlier Note20 build.
+
 ## Screens
 
 <p align="center">
@@ -84,6 +98,7 @@ No store submission. The local APK is debug-key signed — not a Play Store arti
 | `assets/` | Editable 3D circuit sources (`.blend`), renders, fonts and licences. |
 | `shots/` | Dated visual evidence: design sheets, device captures, measured before/after pairs. |
 | `Screenshots/` | README screen frames generated from the real Note20 captures. |
+| `Showcase/` | Full animated portfolio walkthrough, GIF preview, poster and capture provenance. |
 | `references/` | Primary-source research material. |
 | `scripts/` | Python scene-render and design-validation scripts. |
 

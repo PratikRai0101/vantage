@@ -1,0 +1,41 @@
+{
+  "videoSHA256": "8293b9075528b79d802be4ddb886f554ca99702894c254b380e348c6423db026",
+  "video": {
+    "codec": "h264",
+    "width": 1920,
+    "height": 1080,
+    "containerFps": "30/1",
+    "frames": 4490,
+    "durationSeconds": 149.666992,
+    "bytes": 6079569,
+    "embeddedChapters": 10,
+    "fullDecodeErrors": 0
+  },
+  "gifPreview": {
+    "frames": 80,
+    "width": 800,
+    "height": 450,
+    "bytes": 658158
+  },
+  "sourceAppCommit": "bbff426",
+  "installedApkHashVerified": true,
+  "nativeSceneMotionSamples": {
+    "overview": {
+      "samples": 20,
+      "changedPairs": 19,
+      "meanAbsoluteFrameDelta": 0.3
+    },
+    "follow": {
+      "samples": 20,
+      "changedPairs": 18,
+      "meanAbsoluteFrameDelta": 4.869
+    },
+    "battle": {
+      "samples": 20,
+      "changedPairs": 19,
+      "meanAbsoluteFrameDelta": 4.811
+    }
+  },
+  "visualReview": "Decoded chapter contact sheet and full-size film frame inspected; captions/frame/phone UI not clipped. Main playback, comparison sheets, telemetry scroll, light/dark and finale reviewed.",
+  "limitations": "Frame deltas verify changing GL pixels only; not a device FPS benchmark or iPhone runtime acceptance."
+}

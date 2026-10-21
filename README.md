@@ -77,7 +77,7 @@ Verified on a physical Samsung Note 20 5G (Android 13, release APK) and an iPhon
 
 - Native Race / Timing / Lab screens, the shared replay engine and Overview / Follow / Battle cameras.
 - Android: startup, camera change and moving-field pixel gates pass — real GL-region comparisons, not UI-only checks.
-- iOS Simulator: the Metal/WebGPU backend now draws the moving field and camera changes; the real pixel gate passes (446,788 camera / 24,108 moving-field changed pixels). The old EXGL simulator freeze is bypassed.
+- iOS Simulator: the Metal/WebGPU backend now draws the moving field and camera changes; the real pixel gate passes (446,917 camera / 24,120 moving-field changed pixels). The old EXGL simulator freeze is bypassed.
 - Task/timing pacing, the overview framing fix and Android 2× SSAA are measured on-device (`RENDER-STABILITY.md`).
 - Android 2× supersampling (sRGB target, linear then direct fallback) cuts the Note20 hard-step fraction 0.640 → 0.298. It roughly doubles measured GPU frame cost; 100s playback is 3.99% janky vs 1.72% without it, so 60fps is not claimed.
 - Follow/Battle re-captured after the framing change; the Android camera/motion gate passes on the SSAA build (359,314 / 324,496 changed pixels).
@@ -96,12 +96,12 @@ No store submission. The local APK is debug-key signed — not a Play Store arti
 
 | Path | What it is |
 | --- | --- |
-| `mobile/` | Native app (Expo + React Native + Expo GL). Run/build instructions in `mobile/README.md`. |
+| `mobile/` | Native app (Expo + React Native; Expo GL on Android, Metal/WebGPU on iOS). Run/build instructions in `mobile/README.md`. |
 | `replay-prototype/` | Browser proof the app grew out of: 17 moving cars, seekable clock, recorded telemetry. |
 | `assets/` | Editable 3D circuit sources (`.blend`), renders, fonts and licences. |
 | `shots/` | Dated visual evidence: design sheets, device captures, measured before/after pairs. |
 | `Screenshots/` | README screen frames generated from the iPhone Simulator captures. |
-| `Showcase/` | Full animated portfolio walkthrough, GIF preview, poster and capture provenance. |
+| `Showcase/` | 31-second iPhone Simulator walkthrough, GIF preview, poster and capture provenance. |
 | `references/` | Primary-source research material. |
 | `scripts/` | Python scene-render and design-validation scripts. |
 

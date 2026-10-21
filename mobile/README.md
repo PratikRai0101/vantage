@@ -40,7 +40,7 @@ Native folders are CNG-generated from `app.json`; do not hand-edit them. The sim
 - App backgrounding pauses replay; returning does not silently resume it. Hidden/idle scene rendering is suspended.
 - Explicit rendering failures, not a screenshot fallback.
 - Android: 2× render-target supersampling for the native scene (sRGB target, linear then direct fallback). Verified on the Note20: hard-step 0.640 → 0.298, and the camera/motion gate passes. It roughly doubles measured GPU frame cost, so 60fps is not claimed despite the similar average frame count.
-- iOS: react-native-webgpu 0.17.0 with Dawn/Metal and three/webgpu. The iPhone 17 Pro Simulator passes the camera/motion gate (446,788 / 24,108 changed pixels). The same scene, replay engine and controls are shared with Android through a small render-backend interface.
+- iOS: react-native-webgpu 0.17.0 with Dawn/Metal and three/webgpu. The iPhone 17 Pro Simulator passes the camera/motion gate (446,917 / 24,120 changed pixels). The same scene, replay engine and controls are shared with Android through a small render-backend interface.
 
 Native capture links seed existing state once, for example:
 

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Build the README screen frames from the real Note20 captures.
+"""Build the README screen frames from the real iPhone Simulator captures.
 
-The source images are 1080x2400 Android screenshots. This crops the system
-status bar and navigation bar, scales to a 720px-wide asset, and adds a thin
-rounded border so the dark screen reads as a screen on both GitHub themes.
+Source images are 1206x2622 screenshots from the iPhone 17 Pro Simulator. The
+script scales them to 720px, applies the screen's rounded corners and a thin
+border. It does not crop the status bar or repaint any part of the app.
 
 Usage: python3 scripts/make_readme_screenshots.py
 """
@@ -12,29 +12,27 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / "shots" / "quality-overview" / "note20-ssaa"
+SOURCE = ROOT / "shots" / "ios-showcase"
 OUTPUT = ROOT / "Screenshots"
-CROP = (0, 100, 1080, 2250)  # top status bar / bottom Android navigation bar
 WIDTH = 720
-RADIUS = 16
+RADIUS = 38
 BORDER = "#2B3D43"
 
 FRAMES = [
-    ("sweep-92s-overview.png", "01-race-overview.png"),
-    ("03-follow.png", "02-race-follow.png"),
-    ("08-battle.png", "03-race-battle.png"),
-    ("09-timing.png", "04-timing.png"),
-    ("12-lab.png", "05-telemetry.png"),
-    ("11-foreground.png", "06-return-paused.png"),
+    ("01-overview.png", "01-race-overview.png"),
+    ("02-follow.png", "02-race-follow.png"),
+    ("03-battle.png", "03-race-battle.png"),
+    ("04-timing.png", "04-timing.png"),
+    ("05-lab.png", "05-telemetry.png"),
+    ("06-telemetry.png", "06-telemetry-values.png"),
+    ("07-return.png", "07-return-paused.png"),
 ]
 
 
 def frame(source: Path, target: Path) -> None:
-    image = Image.open(source).convert("RGB").crop(CROP)
+    image = Image.open(source).convert("RGB")
     height = round(image.height * WIDTH / image.width)
     image = image.resize((WIDTH, height), Image.LANCZOS)
-
-    # A rounded alpha mask keeps the corners clean without inventing device chrome.
     mask = Image.new("L", image.size, 0)
     ImageDraw.Draw(mask).rounded_rectangle(
         (0, 0, image.width - 1, image.height - 1), radius=RADIUS, fill=255

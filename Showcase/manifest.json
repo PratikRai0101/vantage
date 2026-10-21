@@ -1,85 +1,93 @@
 {
-  "title": "Vantage \u2014 native app walkthrough",
-  "durationSeconds": 149.666667,
-  "output": "1920x1080 / H.264 / 30fps container / silent",
-  "capture": "Android API 37 emulator, release APK, genuine Expo GL and React Native UI",
-  "apkSHA256": "f35bbd9d00871952f0be55be601db80ce50046ec61075e02693897cecdbcd483",
-  "frame": "Original iPhone-style vector presentation frame; NOT an iPhone runtime capture",
-  "onboarding": "Not implemented; the video starts at real cold launch, with no invented screens",
-  "editing": "Launcher trimmed; one cross-take cut to grouped selection and appearance. No screenshot-based sequences, optical-flow synthesis or simulated native transitions. Chapter copy fades are editorial.",
-  "cuts": [
+  "title": "Vantage \u2014 iPhone Simulator walkthrough",
+  "durationSeconds": 31.0,
+  "file": "vantage-demo.mp4",
+  "video": {
+    "codec": "h264",
+    "width": 1080,
+    "height": 1920,
+    "fps": "30/1",
+    "frames": 930,
+    "bytes": 3440488,
+    "sha256": "29e107c718648c63cf7a72ab66c4bd8d9b8b7cc327b3134cbd0c9e8f7c3cf7fc",
+    "audio": false
+  },
+  "capture": {
+    "device": "iPhone 17 Pro Simulator",
+    "runtime": "iOS 26.5",
+    "screen": "1206x2622",
+    "backend": "react-native-webgpu 0.17.0 / Dawn / Metal",
+    "appSourceCommit": "283dd83b2f94f59af7698afdcf44b4da765275bd",
+    "uiTest": "NativeShowcase.testShortVideo",
+    "recorder": "xcrun simctl io recordVideo --codec=h264"
+  },
+  "edit": {
+    "trimStartSeconds": 17.5,
+    "trimEndSeconds": 48.5,
+    "frame": "static phone bezel + rounded screen mask",
+    "fades": "0.25s in / 0.35s out",
+    "appPixels": "unchanged; no screenshot sequences, interpolation or synthetic transitions",
+    "onboarding": "This build has no onboarding; no flow was invented"
+  },
+  "sequence": [
     {
-      "recording": "workflow.mp4",
-      "in": 0.75,
-      "out": 117.5
+      "at": "0:00",
+      "screen": "Race / Follow",
+      "note": "moving replay"
     },
     {
-      "recording": "workflow.mp4",
-      "in": 119,
-      "out": 123
+      "at": "0:02",
+      "screen": "Timing",
+      "note": "Gap / Interval, playing"
     },
     {
-      "recording": "closing.mp4",
-      "in": 0,
-      "out": 29
+      "at": "0:06",
+      "screen": "Race / Battle",
+      "note": "camera change"
+    },
+    {
+      "at": "0:08",
+      "screen": "Lab",
+      "note": "LEC vs VER traces"
+    },
+    {
+      "at": "0:12",
+      "screen": "Compare driver",
+      "note": "native sheet"
+    },
+    {
+      "at": "0:14",
+      "screen": "Lab",
+      "note": "LEC vs NOR"
+    },
+    {
+      "at": "0:18",
+      "screen": "Telemetry",
+      "note": "values and source ages"
+    },
+    {
+      "at": "0:22",
+      "screen": "Race",
+      "note": "selected driver returns"
+    },
+    {
+      "at": "0:24",
+      "screen": "Race / whole field",
+      "note": "playing finale"
     }
   ],
-  "chapters": [
-    {
-      "seconds": 0,
-      "title": "A race, in miniature.",
-      "features": "Launch + whole-field replay"
-    },
-    {
-      "seconds": 12,
-      "title": "Find your angle.",
-      "features": "Three cameras + native orbit"
-    },
-    {
-      "seconds": 28,
-      "title": "Hold the moment.",
-      "features": "Shared replay clock + seeking"
-    },
-    {
-      "seconds": 46,
-      "title": "Change the pace.",
-      "features": "Playback speed controls"
-    },
-    {
-      "seconds": 60,
-      "title": "Read the race.",
-      "features": "Timing + driver selection"
-    },
-    {
-      "seconds": 77,
-      "title": "Compare the details.",
-      "features": "Lab + comparison + chart seeking"
-    },
-    {
-      "seconds": 99,
-      "title": "Inspect the telemetry.",
-      "features": "Recorded telemetry + source ages"
-    },
-    {
-      "seconds": 114,
-      "title": "Show the limits, too.",
-      "features": "In-app reconstruction disclosure"
-    },
-    {
-      "seconds": 120.75,
-      "title": "Every driver counts.",
-      "features": "Group selection + light / dark"
-    },
-    {
-      "seconds": 137.75,
-      "title": "Back to the field.",
-      "features": "Resume + whole-field finale"
-    }
-  ],
+  "gif": {
+    "file": "preview.gif",
+    "frames": 60,
+    "width": 480,
+    "height": 853,
+    "bytes": 680043
+  },
   "limits": [
-    "No physical iPhone acceptance claim",
-    "Emulator presentation is not a device FPS benchmark",
-    "No audio, music or narration",
-    "Pinch, haptics, screen readers and background recovery are not demonstrated in this film"
-  ]
+    "Simulator capture only; not a physical iPhone result",
+    "No audio",
+    "Haptics, thermals, VoiceOver, Dynamic Type and interrupted/background recovery are not demonstrated",
+    "No onboarding exists in this build"
+  ],
+  "validation": "validation.json"
 }

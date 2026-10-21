@@ -2,7 +2,7 @@
 
 ## Implementation checkpoint
 
-The Expo58 native slice builds on both platforms and genuinely renders the approved GLB. Two adapter/loader compatibility faults are fixed and regression-tested. **iOS Simulator visible-frame acceptance now passes on the Metal/WebGPU backend:** the screen draws moving cars and camera changes (446,788 camera / 24,108 moving-field changed pixels). Android keeps the accepted EXGL + 2× SSAA path. The EXGL simulator freeze was a real platform/API limit, not a data or camera bug; the original EXGL research below remains the Android and historical record. See `NATIVE-VALIDATION.md` for evidence and the physical-iPhone gate.
+The Expo58 native slice builds on both platforms and genuinely renders the approved GLB. Two adapter/loader compatibility faults are fixed and regression-tested. **iOS Simulator visible-frame acceptance now passes on the Metal/WebGPU backend:** the screen draws moving cars and camera changes (446,917 camera / 24,120 moving-field changed pixels). Android keeps the accepted EXGL + 2× SSAA path. The EXGL simulator freeze was a real platform/API limit, not a data or camera bug; the original EXGL research below remains the Android and historical record. See `NATIVE-VALIDATION.md` for evidence and the physical-iPhone gate.
 
 The wiring sample below is the original research sketch. Current implementation is `mobile/src/scene/`: `gl-backend.ts` supplies Android's EXGL renderer and `RaceSurface.ios.tsx` supplies the iOS Dawn/Metal surface behind `render-backend.ts`. The scene, replay engine, cars, labels and cameras are shared.
 

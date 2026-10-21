@@ -1,41 +1,56 @@
 {
-  "videoSHA256": "8293b9075528b79d802be4ddb886f554ca99702894c254b380e348c6423db026",
+  "generatedFrom": "Showcase/vantage-demo.mp4",
   "video": {
     "codec": "h264",
-    "width": 1920,
-    "height": 1080,
-    "containerFps": "30/1",
-    "frames": 4490,
-    "durationSeconds": 149.666992,
-    "bytes": 6079569,
-    "embeddedChapters": 10,
-    "fullDecodeErrors": 0
+    "width": 1080,
+    "height": 1920,
+    "fps": "30/1",
+    "frames": 930,
+    "bytes": 3440488,
+    "sha256": "29e107c718648c63cf7a72ab66c4bd8d9b8b7cc327b3134cbd0c9e8f7c3cf7fc",
+    "audio": false
   },
-  "gifPreview": {
-    "frames": 80,
-    "width": 800,
-    "height": 450,
-    "bytes": 658158
+  "gif": {
+    "file": "preview.gif",
+    "frames": 60,
+    "width": 480,
+    "height": 853,
+    "bytes": 680043
   },
-  "sourceAppCommit": "bbff426",
-  "installedApkHashVerified": true,
-  "nativeSceneMotionSamples": {
-    "overview": {
-      "samples": 20,
-      "changedPairs": 19,
-      "meanAbsoluteFrameDelta": 0.3
-    },
-    "follow": {
-      "samples": 20,
-      "changedPairs": 18,
-      "meanAbsoluteFrameDelta": 4.869
-    },
-    "battle": {
-      "samples": 20,
-      "changedPairs": 19,
-      "meanAbsoluteFrameDelta": 4.811
-    }
+  "decode": {
+    "fullDecodeErrors": 0,
+    "checkedWith": "ffmpeg -v error -i Showcase/vantage-demo.mp4 -f null -"
   },
-  "visualReview": "Decoded chapter contact sheet and full-size film frame inspected; captions/frame/phone UI not clipped. Main playback, comparison sheets, telemetry scroll, light/dark and finale reviewed.",
-  "limitations": "Frame deltas verify changing GL pixels only; not a device FPS benchmark or iPhone runtime acceptance."
+  "iphoneMotionGate": {
+    "cameraChangedPixels": 446917,
+    "movingFieldChangedPixels": 24120,
+    "verdict": "PASS",
+    "note": "XCUIScreen captures from the iOS WebGPU/Metal build; not a GPU FPS measurement",
+    "attachments": "shots/ios-showcase/motion/"
+  },
+  "screenshots": {
+    "count": 7,
+    "size": "1206x2622",
+    "source": "NativeShowcase.testGallery",
+    "raw": "shots/ios-showcase/"
+  },
+  "capture": {
+    "simulator": true,
+    "physicalDevice": false,
+    "onboardingImplemented": false
+  },
+  "frame": {
+    "staticBezel": true,
+    "syntheticAppFrames": false,
+    "screenshotSequences": false
+  },
+  "notCovered": [
+    "physical iPhone",
+    "device thermals and sustained pacing",
+    "haptics",
+    "VoiceOver / dynamic type",
+    "interrupted and background recovery",
+    "commercial data rights"
+  ],
+  "sourceAppCommit": "283dd83b2f94f59af7698afdcf44b4da765275bd"
 }

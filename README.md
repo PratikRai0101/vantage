@@ -4,38 +4,36 @@
   <h1>Vantage</h1>
 
   <p><strong>A native 3D Formula 1 miniature and historical replay.</strong><br />
-  The whole Suzuka field, recorded telemetry and three cameras — drawn with Expo GL, not a WebView.</p>
+  The whole Suzuka field, recorded telemetry and three cameras — drawn natively with Three.js, Expo GL and Metal/WebGPU.</p>
 
   <p>
     <a href="#run"><img src="https://img.shields.io/badge/Expo-SDK%2058-315D74?logo=expo&amp;logoColor=white" alt="Expo SDK 58" /></a>
     <a href="#run"><img src="https://img.shields.io/badge/React%20Native-0.88-182C3B?logo=react&amp;logoColor=white" alt="React Native 0.88" /></a>
     <a href="#run"><img src="https://img.shields.io/badge/TypeScript-6.0-466D83?logo=typescript&amp;logoColor=white" alt="TypeScript 6" /></a>
+    <a href="#run"><img src="https://img.shields.io/badge/WebGPU-Metal-315D74" alt="WebGPU / Metal" /></a>
     <a href="#status-october-2026--pre-release"><img src="https://img.shields.io/badge/status-pre--release-628BA2" alt="Status: pre-release" /></a>
   </p>
 </div>
 
-Vantage is a real-time 3D Formula 1 replay app. The native client in `mobile/` (Expo SDK 58 · React Native 0.88 · React 19.3) draws a full circuit, the recorded field of 17 moving cars and three camera modes with Expo GL + Three.js — no WebView, no video playback. It replays the 2024 Japanese Grand Prix fixture from documented OpenF1 recordings and follows the product direction approved in `DIRECTION.md`.
+Vantage is a real-time 3D Formula 1 replay app. The native client in `mobile/` (Expo SDK 58 · React Native 0.88 · React 19.3) draws a full circuit, the recorded field of 17 moving cars and three camera modes with Three.js, using Expo GL on Android and react-native-webgpu (Dawn/Metal) on iOS — no WebView, no video playback. It replays the 2024 Japanese Grand Prix fixture from documented OpenF1 recordings and follows the product direction approved in `DIRECTION.md`.
 
 ## Demo
 
-[![Watch Vantage's full native-app walkthrough in an iPhone-style frame](Showcase/preview.gif)](https://github.com/PratikRai0101/vantage/raw/refs/heads/main/Showcase/vantage-demo.mp4)
+[![Watch Vantage's 31-second iPhone Simulator walkthrough](Showcase/preview.gif)](https://github.com/PratikRai0101/vantage/raw/refs/heads/main/Showcase/vantage-demo.mp4)
 
-**[Watch the 2:30 walkthrough](https://github.com/PratikRai0101/vantage/raw/refs/heads/main/Showcase/vantage-demo.mp4)** · [Video and capture details](Showcase/README.md)
+**[Watch the 31-second walkthrough](https://github.com/PratikRai0101/vantage/raw/refs/heads/main/Showcase/vantage-demo.mp4)** · [Capture details](Showcase/README.md)
 
-Real screen recording, not a slideshow: launch, moving replay, three cameras,
-orbit/reset, scrubbing, speed selection, Timing, driver comparison, chart seeking,
-telemetry, grouped selection and light/dark appearance. The footage runs on an
-**Android emulator inside an iPhone-style presentation frame**, not an iPhone.
-There is no onboarding in this build; the film begins at the actual cold launch.
-It includes the updated scrubber and compact Timing/Lab layout; the physical-device
-stills below are from the earlier Note20 build.
+The real app on an iPhone 17 Pro Simulator, inside a phone frame: moving replay,
+Follow and Battle cameras, scrubbing, speed, Timing, driver comparison, telemetry
+and the whole-field finish. Silent, no titles, no captions. The 3D scene runs on
+Metal/WebGPU; the footage is simulator capture, not a physical iPhone.
 
 ## Screens
 
 <p align="center">
   <img src="Screenshots/01-race-overview.png" width="360" alt="Vantage Race screen: the whole Suzuka field on an olive tabletop miniature, 17 moving cars, driver labels and group counts" />
   <br />
-  <sub><strong>Race</strong> — the whole field at 01:33. Seventeen moving streams, recorded lap and timing, and ×N badges where projected cars overlap.</sub>
+  <sub><strong>Race</strong> — the whole field at 00:04. Seventeen moving streams, recorded lap and timing, and ×N badges where projected cars overlap.</sub>
 </p>
 
 <table>
@@ -59,33 +57,38 @@ stills below are from the earlier Note20 build.
       <br /><sub><strong>Lab</strong> — time-aligned speed traces plus speed, throttle, brake, gear and RPM at the shared cursor.</sub>
     </td>
   </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="Screenshots/06-telemetry-values.png" alt="Vantage telemetry values: speed, throttle, brake, gear and RPM for two drivers with source ages" />
+      <br /><sub><strong>Telemetry</strong> — speed, throttle, binary brake, gear and RPM at the shared cursor, with source age beside each driver.</sub>
+    </td>
+    <td width="50%" valign="top">
+      <img src="Screenshots/07-return-paused.png" alt="Vantage Race screen after returning from Timing and Lab, with the whole field and selected driver" />
+      <br /><sub><strong>Return</strong> — returning to Race keeps the shared cursor and selected driver; the replay does not silently resume.</sub>
+    </td>
+  </tr>
 </table>
 
-<p align="center">
-  <img src="Screenshots/06-return-paused.png" width="320" alt="Vantage Race screen after returning from the background: Battle view paused with NOR and HAM" />
-  <br />
-  <sub><strong>Return</strong> — returning from the background leaves the replay paused at the last cursor. Timing and telemetry stay available.</sub>
-</p>
-
-Every screen above is a real native `expo-gl` capture from the release APK on a Samsung Note20 5G (Android 13, 1080×2400, 2× SSAA), cropped to remove the Android status and navigation bars. No WebView, video or screenshot fallback. Raw device evidence lives in `shots/quality-overview/note20-ssaa/`; the frames are generated by `scripts/make_readme_screenshots.py`.
+Every screen above is a real native capture from the iPhone 17 Pro Simulator (iOS 26.5, 1206×2622) running the Metal/WebGPU backend. The status bar is the simulator's. No WebView, video or screenshot fallback. Raw captures live in `shots/ios-showcase/`; the frames are generated by `scripts/make_readme_screenshots.py`.
 
 ## Status (October 2026) — pre-release
 
-Verified on a physical Samsung Note 20 5G (Android 13, release APK):
+Verified on a physical Samsung Note 20 5G (Android 13, release APK) and an iPhone 17 Pro Simulator (iOS 26.5):
 
 - Native Race / Timing / Lab screens, the shared replay engine and Overview / Follow / Battle cameras.
-- Startup, camera change and moving-field pixel gates pass — real GL-region comparisons, not UI-only checks.
-- Task/timing pacing, the overview framing fix and 2× SSAA are measured on-device (`RENDER-STABILITY.md`).
-- 2× supersampling in the native renderer (sRGB target, linear then direct fallback) cuts the Note20 hard-step fraction 0.640 → 0.298. It roughly doubles measured GPU frame cost; 100s playback is 3.99% janky vs 1.72% without it, so 60fps is not claimed.
-- Follow/Battle re-captured after the framing change; the camera/motion gate passes on the SSAA build (359,314 / 324,496 changed pixels).
-- 110s SSAA camera sweep: no sustained blackout in the sampled recording (4Hz; shorter faults and ghosting are not excluded).
-- `cd mobile && npm run check` — TypeScript, ESLint and 39 pure tests pass.
+- Android: startup, camera change and moving-field pixel gates pass — real GL-region comparisons, not UI-only checks.
+- iOS Simulator: the Metal/WebGPU backend now draws the moving field and camera changes; the real pixel gate passes (446,788 camera / 24,108 moving-field changed pixels). The old EXGL simulator freeze is bypassed.
+- Task/timing pacing, the overview framing fix and Android 2× SSAA are measured on-device (`RENDER-STABILITY.md`).
+- Android 2× supersampling (sRGB target, linear then direct fallback) cuts the Note20 hard-step fraction 0.640 → 0.298. It roughly doubles measured GPU frame cost; 100s playback is 3.99% janky vs 1.72% without it, so 60fps is not claimed.
+- Follow/Battle re-captured after the framing change; the Android camera/motion gate passes on the SSAA build (359,314 / 324,496 changed pixels).
+- 110s Android SSAA camera sweep: no sustained blackout in the sampled recording (4Hz; shorter faults and ghosting are not excluded).
+- `cd mobile && npm run check` — TypeScript, ESLint and 41 pure tests pass.
 
 Not yet established:
 
-- iOS device behaviour. Simulator moving-replay presentation is a known EXGL limitation; no physical iPhone has run the app.
-- Sustained 2× SSAA performance and SoC thermals beyond the 100s aggregate run. The pacing figure is HWUI/GPU contention, not a Perfetto GPU trace; a 1.5× experiment traded sharpness for GPU headroom without a consistent jank win, and no adaptive mode is shipped.
-- A GPU-trace-level profile, p99 hitches, intermittent blackouts, ghosting, and any device beyond the one test handset.
+- Physical iPhone behaviour. The video and stills are iPhone Simulator captures; no physical iPhone has run the app. Haptics, thermals and real-device GPU pacing remain unverified.
+- Sustained Android 2× SSAA performance and SoC thermals beyond the 100s aggregate run. The pacing figure is HWUI/GPU contention, not a Perfetto GPU trace; a 1.5× experiment traded sharpness for GPU headroom without a consistent jank win, and no adaptive mode is shipped.
+- A GPU-trace-level profile, p99 hitches, intermittent blackouts, ghosting, and any device beyond the Note20 and iPhone Simulator.
 
 No store submission. The local APK is debug-key signed — not a Play Store artifact. No live-data integration and no commercial rights clearance; see `REFERENCES.md`.
 
@@ -97,7 +100,7 @@ No store submission. The local APK is debug-key signed — not a Play Store arti
 | `replay-prototype/` | Browser proof the app grew out of: 17 moving cars, seekable clock, recorded telemetry. |
 | `assets/` | Editable 3D circuit sources (`.blend`), renders, fonts and licences. |
 | `shots/` | Dated visual evidence: design sheets, device captures, measured before/after pairs. |
-| `Screenshots/` | README screen frames generated from the real Note20 captures. |
+| `Screenshots/` | README screen frames generated from the iPhone Simulator captures. |
 | `Showcase/` | Full animated portfolio walkthrough, GIF preview, poster and capture provenance. |
 | `references/` | Primary-source research material. |
 | `scripts/` | Python scene-render and design-validation scripts. |

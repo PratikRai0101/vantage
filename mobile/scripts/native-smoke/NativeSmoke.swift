@@ -6,7 +6,7 @@ final class NativeSmoke: XCTestCase {
     a.name = name; a.lifetime = .keepAlways; add(a)
   }
   func replayTime(_ app: XCUIApplication) -> Double {
-    let labels = app.staticTexts.matching(NSPredicate(format: "label MATCHES %@", "^[0-9]{2}:[0-9]{2}\\.[0-9]$")).allElementsBoundByIndex.map { $0.label }
+    let labels = app.staticTexts.matching(NSPredicate(format: "label MATCHES %@", "^[0-9]{2}:[0-9]{2}(\\.[0-9])?$")).allElementsBoundByIndex.map { $0.label }
     let values = labels.compactMap { label -> Double? in
       let parts = label.split(separator: ":")
       guard parts.count == 2, let minutes = Double(parts[0]), let seconds = Double(parts[1]) else { return nil }

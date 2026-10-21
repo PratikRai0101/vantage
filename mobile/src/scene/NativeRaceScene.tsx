@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AccessibilityInfo, AppState, PanResponder, StyleSheet, Text, View, type GestureResponderEvent } from 'react-native';
-import { GLView, type ExpoWebGLRenderingContext } from 'expo-gl';
+import { RaceSurface } from './RaceSurface';
+import type { RaceRenderBackend } from './render-backend';
 import type { ReplayEngine, TrackData } from '../replay';
 import { RaceSceneRuntime, type SceneReadyInfo } from './runtime';
 
@@ -16,7 +17,7 @@ export type NativeRaceSceneProps = {
 };
 // Keep the native surface isolated from telemetry/status React updates. Only a
 // deliberate generation/context change should update or remount its native host.
-const NativeSurface = React.memo(GLView);
+const NativeSurface = React.memo(RaceSurface);
 const pinchDistance = (event: GestureResponderEvent) => {
   const touches = event.nativeEvent.touches;
   return touches.length >= 2 ? Math.hypot(touches[0].pageX - touches[1].pageX, touches[0].pageY - touches[1].pageY) : 0;
@@ -82,8 +83,13 @@ export const NativeRaceScene = React.memo(function NativeRaceScene(props: Native
   useEffect(() => { runtime.current?.setBackground(props.backgroundColor); }, [props.backgroundColor]);
   useEffect(() => { runtime.current?.resetView(); }, [props.resetKey]);
 
-  const create = useCallback((gl: ExpoWebGLRenderingContext) => {
-    if (!mounted.current || surfaceEpoch !== generation.current) return;
+  const reportSurfaceError = useCallback((error: Error) => {
+    if (!mounted.current) return;
+    runtime.current?.dispose(); runtime.current = null;
+    setFailed(true); setStatus(`Native 3D unavailable\n${error.message}`); latest.current.onError?.(error);
+  }, []);
+  const create = useCallback((backend: RaceRenderBackend) => {
+    if (!mounted.current || surfaceEpoch !== generation.current) { backend.dispose(); return; }
     runtime.current?.dispose(); runtime.current = null;
     setStatus('Loading native circuit…'); setFailed(false);
     const reportError = (error: Error) => {
@@ -91,7 +97,7 @@ export const NativeRaceScene = React.memo(function NativeRaceScene(props: Native
       setFailed(true); setStatus(`Native 3D unavailable\n${error.message}`); latest.current.onError?.(error);
     };
     try {
-      const value = new RaceSceneRuntime(gl, props.engine, props.track, {
+      const value = new RaceSceneRuntime(backend, props.engine, props.track, {
         ready: info => { if (mounted.current) { setStatus(''); latest.current.onReady?.(info); } }, error: reportError,
       }, latest.current.backgroundColor);
       runtime.current = value; value.resize(size.current.width, size.current.height);
@@ -105,7 +111,7 @@ export const NativeRaceScene = React.memo(function NativeRaceScene(props: Native
       onLayout={event => { size.current = event.nativeEvent.layout; runtime.current?.resize(size.current.width, size.current.height); }}>
       <View collapsable={false} style={styles.fill} {...responder.panHandlers} accessible accessibilityRole="image"
         accessibilityLabel="Three-dimensional Suzuka replay. Select a driver and camera using the replay controls below. Drag to orbit, pinch to zoom.">
-        <NativeSurface key={surfaceEpoch} collapsable={false} collapsableChildren={false} style={styles.flex} msaaSamples={0} onContextCreate={create} />
+        <NativeSurface key={surfaceEpoch} collapsable={false} collapsableChildren={false} style={styles.flex} onCreate={create} onError={reportSurfaceError} />
       </View>
       {/* Keep the native sibling hierarchy stable when first-frame status clears.
           Fabric reparenting would call GLView.removeFromSuperview(), which destroys

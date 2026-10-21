@@ -4,7 +4,7 @@ out = ARGV.fetch(0)
 FileUtils.mkdir_p(out)
 project = Xcodeproj::Project.new(File.join(out, 'NativeSmoke.xcodeproj'))
 target = project.new_target(:ui_test_bundle, 'NativeSmoke', :ios, '18.0')
-source = project.main_group.new_file(File.expand_path('NativeSmoke.swift', __dir__))
+source = project.main_group.new_file(ARGV[1] ? File.expand_path(ARGV[1]) : File.expand_path('NativeSmoke.swift', __dir__))
 target.source_build_phase.add_file_reference(source)
 target.build_configurations.each do |c|
   c.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = 'dev.vantage.smokeui'

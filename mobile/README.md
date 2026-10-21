@@ -1,12 +1,12 @@
 # Vantage — native replay foundation
 
-Expo 58 + React Native 0.88 + React 19.3. Native Race / Timing / Lab UI, native Expo GL + Three 0.180 rendering. **No WebView wrapper.** This is a private evaluation build, not an App Store release.
+Expo 58 + React Native 0.88 + React 19.3. Native Race / Timing / Lab UI and Three 0.180 rendering: Expo GL + 2× SSAA on Android, react-native-webgpu (Dawn/Metal) on iOS. **No WebView wrapper.** This is a private evaluation build, not an App Store release.
 
 ## Run and check
 
 ```sh
-npm ci
-npm run check  # TypeScript, ESLint, pure replay/scene/format/adapter tests
+npm ci          # postinstall guards a Three r180 browser-only VideoFrame check for Hermes
+npm run check   # TypeScript, ESLint, 41 pure replay/scene/format/adapter tests
 npx expo-doctor
 npm start
 ```
@@ -39,7 +39,8 @@ Native folders are CNG-generated from `app.json`; do not hand-edit them. The sim
 - Automatic dark/light semantic UI colors, bundled IBM Plex Mono, system-native labels and tabs.
 - App backgrounding pauses replay; returning does not silently resume it. Hidden/idle scene rendering is suspended.
 - Explicit rendering failures, not a screenshot fallback.
-- 2× render-target supersampling for the native scene (sRGB target, linear then direct fallback). Verified on the Note20: hard-step 0.640 → 0.298, and the camera/motion gate passes. It roughly doubles measured GPU frame cost, so 60fps is not claimed despite the similar average frame count.
+- Android: 2× render-target supersampling for the native scene (sRGB target, linear then direct fallback). Verified on the Note20: hard-step 0.640 → 0.298, and the camera/motion gate passes. It roughly doubles measured GPU frame cost, so 60fps is not claimed despite the similar average frame count.
+- iOS: react-native-webgpu 0.17.0 with Dawn/Metal and three/webgpu. The iPhone 17 Pro Simulator passes the camera/motion gate (446,788 / 24,108 changed pixels). The same scene, replay engine and controls are shared with Android through a small render-backend interface.
 
 Native capture links seed existing state once, for example:
 
@@ -54,13 +55,13 @@ The links are repeatable state inputs, **not a substitute for touch/VoiceOver te
 ## Honest limits
 
 - See `../NATIVE-VALIDATION.md` for the actual build/runtime evidence and remaining device gates. Compile/test success alone does not prove native 3D rendering.
-- Physical iPhone performance, a GPU-trace/thermal profile, sustained playback beyond 100s, gestures, haptics, VoiceOver/TalkBack, large text and other Android devices need real-device acceptance. Note20 aggregate pacing is in `../RENDER-STABILITY.md`; it is not a GPU trace.
+- Physical iPhone performance, real-device GPU pacing, a thermal profile, gestures, haptics, VoiceOver/TalkBack, large text and other Android devices need acceptance. Simulator capture is not a physical-device result; Note20 aggregate pacing is in `../RENDER-STABILITY.md`; it is not a GPU trace.
 - Geometry, elevation, racing lanes and pit paths are illustrative; route projection is not surveyed positioning. No exact contact/overtake claims, simulated fuel, tyre temperature or battery data.
 - No accounts, billing, licensed live feeds or production backend yet.
-- `npm audit` currently reports 27 advisories (8 moderate, 19 high). Do not force incompatible Expo downgrades. Assess advisory reachability and adopt compatible upstream patches before production.
+- `npm audit` currently reports 28 advisories (8 moderate, 20 high). Do not force incompatible Expo downgrades. Assess advisory reachability and adopt compatible upstream patches before production.
 
 ## Sources and rights
 
-The JSON fixtures are byte-identical to the prepared browser replay; the native model is a separately refined car-free GLB with baked vertex lighting, rounded edges, quieter planting and roof details. The browser model remains unchanged. Regenerate the native world with Blender using `scripts/export_studio_world.py`; regenerate OFL Plex GPU-label coverage with `python3 scripts/build_label_glyphs.py` (Pillow). See `../replay-prototype/data/SOURCES.md` for source windows, provenance, registration and runtime/source distinctions. The original model and both licenses are bundled under `assets/`.
+The JSON fixtures are byte-identical to the prepared browser replay; the native model is a separately refined car-free GLB with baked vertex lighting, rounded edges, quieter planting and roof details. The browser model remains unchanged. Regenerate the native world with Blender using `scripts/export_studio_world.py`; regenerate OFL Plex GPU-label coverage with `python3 scripts/build_label_glyphs.py` (Pillow). `scripts/patch-three-native.mjs` is a version-pinned postinstall guard for Three 0.180’s WebGPU `VideoFrame` check; keep it until Three is upgraded and re-tested. See `../replay-prototype/data/SOURCES.md` for source windows, provenance, registration and runtime/source distinctions. The original model and both licenses are bundled under `assets/`.
 
 Circuit-plan source: MIT `bacinger/f1-circuits`. Font: IBM Plex Mono, OFL. No official F1 mesh, logo, broadcast footage or Apple font is bundled. **Historical data availability is not commercial clearance.** Personal/noncommercial evaluation only until rights are resolved.

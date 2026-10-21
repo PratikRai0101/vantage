@@ -30,7 +30,8 @@
         "imageWidth": 96,
         "dark": { "backgroundColor": "#101719" }
       }],
-      ["expo-asset", { "assets": ["./assets/licenses/third_party_notices.json"] }]
+      ["expo-asset", { "assets": ["./assets/licenses/third_party_notices.json"] }],
+      "react-native-webgpu"
     ],
     "experiments": { "typedRoutes": true, "reactCompiler": true }
   }

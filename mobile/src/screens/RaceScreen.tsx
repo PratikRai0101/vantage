@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Platform, Pressable, View, useWindowDimensions } from "react-native";
+import { Pressable, View, useWindowDimensions } from "react-native";
 import { router, useIsFocused } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { NativeRaceScene } from "@/scene";
@@ -70,9 +70,7 @@ export function RaceScreen() {
         ) : null}
       </View>
       <Label muted size={11} style={{ textAlign: "center", marginBottom: 8 }}>
-        {Platform.OS === 'android'
-          ? 'Drag / pinch · ×N = grouped projections'
-          : 'Native 3D preview · motion presentation under investigation'}
+        Drag / pinch · ×N = grouped projections
       </Label>
       <View style={[ui.row, { gap: 6 }]}>
         {(

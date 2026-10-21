@@ -2,15 +2,15 @@
 
 ## Implementation checkpoint
 
-The Expo58 native slice now builds on both platforms and genuinely renders the approved GLB. Two adapter/loader compatibility faults are fixed and regression-tested. **iOS Simulator visible-frame acceptance remains red:** GPU readback shows new camera views, while screen captures retain the first GL image. View/lifecycle and explicit presentation trials did not fix that gate; the native vendor patch was rolled back. No picture fallback or fake capabilities were introduced. See `NATIVE-VALIDATION.md` for exact evidence and the required real-handset check before deciding on the fallback.
+The Expo58 native slice builds on both platforms and genuinely renders the approved GLB. Two adapter/loader compatibility faults are fixed and regression-tested. **iOS Simulator visible-frame acceptance now passes on the Metal/WebGPU backend:** the screen draws moving cars and camera changes (446,788 camera / 24,108 moving-field changed pixels). Android keeps the accepted EXGL + 2× SSAA path. The EXGL simulator freeze was a real platform/API limit, not a data or camera bug; the original EXGL research below remains the Android and historical record. See `NATIVE-VALIDATION.md` for evidence and the physical-iPhone gate.
 
-The wiring sample below is the original research sketch; current implementation is `mobile/src/scene/`, including the canvas-acquisition correction for Expo58's WebGL inheritance.
+The wiring sample below is the original research sketch. Current implementation is `mobile/src/scene/`: `gl-backend.ts` supplies Android's EXGL renderer and `RaceSurface.ios.tsx` supplies the iOS Dawn/Metal surface behind `render-backend.ts`. The scene, replay engine, cars, labels and cameras are shared.
 
 ## Recommendation
 
 **Time-box the first native slice to Expo GL + Three 0.180.0, using a tiny explicit EXGL renderer adapter, not a WebView and not the stale `expo-three` dependency.** Reuse the existing scene, geometry, route interpolation, car transforms and camera maths. Start with direct-to-screen rendering, no shadows/postprocessing/compressed textures. Gate the choice on an actual iPhone + Android smoke test; this is a credible implementation path, **not a device-verified compatibility guarantee**.
 
-**Fallback:** React Native Filament 1.11.0 if EXGL cannot render this exact untextured GLB on target devices. It loads local GLBs natively and uses Metal on iOS, but requires a custom build, worklets-core and a rewrite of procedural cars/cameras. RN WebGPU is a credible Three-preserving alternative, especially for simulator work, but introduces a new renderer/backend and native build dependency; do not simultaneously implement three renderers.
+**Implementation note (October 2026):** the first slice used EXGL on both platforms. iOS now uses `react-native-webgpu` 0.17.0 (Dawn, Metal) with `three/webgpu`; Android remains EXGL + 2× SSAA. This is two platform-specific surfaces behind one `RaceRenderBackend`, not two scene implementations. React Native Filament 1.11.0 remains the fallback if the Metal backend cannot run on physical iPhones; do not add a third renderer without evidence.
 
 ### Current comparison
 

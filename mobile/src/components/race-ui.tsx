@@ -152,13 +152,15 @@ export function Screen({ children }: { children: React.ReactNode }) {
 export function Header({
   title = "Suzuka",
   subtitle = "Japanese Grand Prix",
+  compact = false,
 }: {
   title?: string;
   subtitle?: string;
+  compact?: boolean;
 }) {
   const { colors } = useTheme();
   return (
-    <View style={{ paddingBottom: 16, gap: 6 }}>
+    <View style={{ paddingBottom: compact ? 10 : 16, gap: compact ? 4 : 6 }}>
       <View style={[ui.row, { flexWrap: "wrap", gap: 8 }]}>
         <Label size={13} muted>
           {subtitle}
@@ -179,14 +181,16 @@ export function Header({
       </View>
       <Label
         accessibilityRole="header"
-        size={32}
+        size={compact ? 28 : 32}
         style={{ fontWeight: "600", letterSpacing: -1 }}
       >
         {title}
       </Label>
-      <Label size={11} mono muted>
-        OPENF1 9496 · 7 APR · 120-SECOND EXCERPT
-      </Label>
+      {compact ? null : (
+        <Label size={11} mono muted>
+          OPENF1 9496 · 7 APR · 120-SECOND EXCERPT
+        </Label>
+      )}
     </View>
   );
 }

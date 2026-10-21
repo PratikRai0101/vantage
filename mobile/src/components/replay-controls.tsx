@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   Modal,
@@ -6,7 +6,6 @@ import {
   ScrollView,
   View,
 } from "react-native";
-import { Slider } from "@expo/ui/community/slider";
 import * as Haptics from "expo-haptics";
 import { useReplay, useReplayClock } from "@/state/ReplayProvider";
 import { useTheme } from "@/theme/ThemeContext";
@@ -81,6 +80,103 @@ function Sheet({
     </Modal>
   );
 }
+/**
+ * A plain rail with an elapsed fill and a distinct thumb. The native Expo slider
+ * rendered its maximum track as the accent colour, so at 00:00 the rail looked
+ * almost fully elapsed. Keeping the floor with the app also keeps the thumb and
+ * the remaining track legible in both themes.
+ */
+function Scrubber({
+  value,
+  maximum,
+  onChange,
+}: {
+  value: number;
+  maximum: number;
+  onChange: (value: number) => void;
+}) {
+  const { colors, brand } = useTheme();
+  const [trackWidth, setTrackWidth] = useState(0);
+  const width = useRef(0);
+  const ratio =
+    maximum > 0 ? Math.min(1, Math.max(0, value / maximum)) : 0;
+  const progress = ratio * trackWidth;
+  const thumb = Math.min(
+    Math.max(progress, 7),
+    Math.max(7, trackWidth - 7),
+  );
+  const seek = (locationX: number) => {
+    if (width.current <= 0) return;
+    const next =
+      Math.round(
+        Math.min(1, Math.max(0, locationX / width.current)) * maximum * 10,
+      ) / 10;
+    onChange(next);
+  };
+  return (
+    <View
+      accessible
+      accessibilityRole="adjustable"
+      accessibilityLabel="Replay time. Adjusting pauses replay"
+      accessibilityValue={{
+        min: 0,
+        max: maximum,
+        now: value,
+        text: `${formatClock(value)} of ${formatClock(maximum)}`,
+      }}
+      accessibilityActions={[{ name: "increment" }, { name: "decrement" }]}
+      onAccessibilityAction={(event) => {
+        const delta =
+          event.nativeEvent.actionName === "increment" ? 5 : -5;
+        onChange(Math.min(maximum, Math.max(0, value + delta)));
+      }}
+      onLayout={(event) => {
+        width.current = event.nativeEvent.layout.width;
+        setTrackWidth(event.nativeEvent.layout.width);
+      }}
+      onStartShouldSetResponder={() => true}
+      onMoveShouldSetResponder={() => true}
+      onResponderTerminationRequest={() => false}
+      onResponderGrant={(event) => {
+        selectionHaptic();
+        seek(event.nativeEvent.locationX);
+      }}
+      onResponderMove={(event) => seek(event.nativeEvent.locationX)}
+      style={{ height: 44, justifyContent: "center" }}
+    >
+      <View
+        style={{
+          height: 4,
+          borderRadius: 2,
+          backgroundColor: colors.separator,
+          overflow: "hidden",
+        }}
+      >
+        <View
+          style={{
+            width: progress,
+            height: "100%",
+            backgroundColor: brand.primary,
+          }}
+        />
+      </View>
+      <View
+        pointerEvents="none"
+        style={{
+          position: "absolute",
+          top: 15,
+          left: thumb - 7,
+          width: 14,
+          height: 14,
+          borderRadius: 7,
+          backgroundColor: brand.primary,
+          borderWidth: 2.5,
+          borderColor: colors.background,
+        }}
+      />
+    </View>
+  );
+}
 // Only this readout subscribes to the playback cursor, so transport ticks never
 // re-render the screen, scene host or driver list above it.
 function TransportClock() {
@@ -88,7 +184,7 @@ function TransportClock() {
   const time = useReplayClock();
   return (
     <View style={{ flex: 1 }}>
-      <View style={[ui.row, { flexWrap: "wrap", gap: 4 }]}>
+      <View style={[ui.row, { width: "100%", marginBottom: 2 }]}>
         <Label mono size={13}>
           {formatClock(time)}
         </Label>
@@ -96,14 +192,10 @@ function TransportClock() {
           {formatClock(data.window.duration)}
         </Label>
       </View>
-      <Slider
-        accessibilityLabel="Replay time in seconds. Adjusting pauses replay"
-        minimumValue={0}
-        maximumValue={data.window.duration}
-        step={0.1}
+      <Scrubber
         value={time}
-        onValueChange={(value) => engine.seek(value)}
-        style={{ width: "100%", height: 44 }}
+        maximum={data.window.duration}
+        onChange={(value) => engine.seek(value)}
       />
     </View>
   );
@@ -195,9 +287,9 @@ export function DriverChooser({ compare = false }: { compare?: boolean }) {
           ui.row,
           {
             gap: 12,
-            minHeight: 48,
+            minHeight: 44,
             paddingHorizontal: 14,
-            paddingVertical: 10,
+            paddingVertical: 8,
             borderRadius: 12,
             backgroundColor: colors.secondaryBackground,
           },

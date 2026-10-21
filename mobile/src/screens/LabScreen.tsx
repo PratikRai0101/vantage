@@ -22,7 +22,7 @@ export function LabScreen() {
   const secondCode = compare?.driver.code ?? "—";
   return (
     <Screen>
-      <Header title="Telemetry" subtitle="Lab · Japanese Grand Prix" />
+      <Header title="Telemetry" subtitle="Lab · Japanese Grand Prix" compact />
       <View style={[ui.row, { gap: 12, flexWrap: "wrap" }]}>
         <Label size={22} style={{ fontWeight: "600" }}>
           {firstCode} vs {secondCode}
@@ -32,11 +32,11 @@ export function LabScreen() {
         </Label>
       </View>
       <ReplayTransport />
-      <View style={ui.section}>
+      <View style={{ marginTop: 12, gap: 8 }}>
         <DriverChooser />
         <DriverChooser compare />
       </View>
-      <View style={ui.section}>
+      <View style={{ marginTop: 16 }}>
         <SpeedChart
           first={selected?.driver}
           second={compare?.driver}

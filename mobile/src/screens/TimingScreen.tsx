@@ -4,7 +4,7 @@ import { router } from "expo-router";
 import { useReplay, useReplayClock } from "@/state/ReplayProvider";
 import { useTheme } from "@/theme/ThemeContext";
 import { formatGap, lastCompletedLap } from "@/replay";
-import { Button, Header, Label, Rule, Screen, ui } from "@/components/race-ui";
+import { Button, Header, Label, Screen, ui } from "@/components/race-ui";
 import { ReplayTransport, selectionHaptic } from "@/components/replay-controls";
 import { ageText, lapTime, teamColor } from "@/components/replay-format";
 
@@ -17,9 +17,9 @@ export function TimingScreen() {
   const rows = engine.standings(time);
   return (
     <Screen>
-      <Header title="Timing" />
+      <Header title="Timing" compact />
       <ReplayTransport />
-      <View style={ui.section}>
+      <View style={{ marginTop: 16, gap: 8 }}>
         <View style={[ui.row, { gap: 12, flexWrap: "wrap" }]}>
           <Label size={22} style={{ fontWeight: "600" }}>
             Recorded order
@@ -33,9 +33,6 @@ export function TimingScreen() {
             </Button>
           </View>
         </View>
-        <Label muted size={13}>
-          20 drivers · select an eligible driver to view on Race
-        </Label>
         <View style={ui.row}>
           <Label mono size={11} muted>
             POS / DRIVER
@@ -45,7 +42,6 @@ export function TimingScreen() {
           </Label>
         </View>
       </View>
-      <Rule />
       {rows.map((item) => {
         const driver = item.driver;
         const isSelected = driver.number === state.selected;
@@ -78,7 +74,7 @@ export function TimingScreen() {
               router.navigate("/");
             }}
             style={{
-              paddingVertical: 14,
+              paddingVertical: 10,
               paddingHorizontal: 8,
               marginHorizontal: -8,
               borderBottomWidth: 0.5,
@@ -129,7 +125,7 @@ export function TimingScreen() {
             <View
               style={[
                 ui.row,
-                { marginTop: 8, marginLeft: 38, gap: 8, flexWrap: "wrap" },
+                { marginTop: 4, marginLeft: 38, gap: 8, flexWrap: "wrap" },
               ]}
             >
               <Label mono muted size={11}>
@@ -143,6 +139,9 @@ export function TimingScreen() {
         );
       })}
       <View style={ui.section}>
+        <Label muted size={11}>
+          20 drivers · select an eligible driver to view on Race
+        </Label>
         <Label muted size={13}>
           Ranks and intervals are sparse recorded events, not inferred from the
           miniature. Their source ages can differ from telemetry. Last lap means

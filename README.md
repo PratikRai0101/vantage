@@ -33,8 +33,9 @@ Vantage is a real-time 3D Formula 1 replay app. The native client in `mobile/` (
   <sub>Native iOS · 60 fps · One continuous take · Real taps, camera moves and scrolling</sub>
 </p>
 
-The whole-field overview, Follow and Battle cameras, seeking, 2× speed, Timing,
-Lab comparison, telemetry values and the whole-field finish. The app is driven by
+Pressing Play, switching Follow and Battle cameras, changing Timing from Gap to
+Interval, choosing a Lab comparison driver, scrolling through telemetry and
+returning to the whole field. The app is driven by
 a UI test on the iPhone 17 Pro Simulator with the bundled OpenF1 excerpt; the 3D
 scene is moving, not a sequence of mockups.
 

@@ -17,21 +17,37 @@
 
 Vantage is a real-time 3D Formula 1 replay app. The native client in `mobile/` (Expo SDK 58 · React Native 0.88 · React 19.3) draws a full circuit, the recorded field of 17 moving cars and three camera modes with Three.js, using Expo GL on Android and react-native-webgpu (Dawn/Metal) on iOS — no WebView, no video playback. It replays the 2024 Japanese Grand Prix fixture from documented OpenF1 recordings and follows the product direction approved in `DIRECTION.md`.
 
-## Demo
+> [!IMPORTANT]
+> **Vantage is pre-release.** The native replay is built and verified on Android and the iPhone 17 Pro Simulator. Physical-iPhone behaviour, GPU pacing, thermals, accessibility and commercial data rights are not verified, and nothing is on the App Store.
 
-[![Watch Vantage's 31-second iPhone Simulator walkthrough](Showcase/preview.gif)](https://github.com/PratikRai0101/vantage/raw/refs/heads/main/Showcase/vantage-demo.mp4)
+## See it in use
 
-**[Watch the 31-second walkthrough](https://github.com/PratikRai0101/vantage/raw/refs/heads/main/Showcase/vantage-demo.mp4)** · [Capture details](Showcase/README.md)
+<p align="center">
+  <a href="Showcase/vantage-demo-framed.mp4">
+    <img src="Showcase/vantage-demo-framed.gif" width="260" alt="Vantage in an iPhone 17 Pro frame: the whole field, Follow and Battle cameras, Timing, Lab comparison and telemetry" />
+  </a>
+</p>
 
-The real app on an iPhone 17 Pro Simulator, inside a phone frame: moving replay,
-Follow and Battle cameras, seeking, 2× speed, Timing, driver comparison, telemetry
-and the whole-field finish. Silent, no titles, no captions. The 3D scene runs on
-Metal/WebGPU; the footage is simulator capture, not a physical iPhone.
+<p align="center">
+  <a href="Showcase/vantage-demo-framed.mp4"><strong>Watch the 34-second demo</strong></a><br />
+  <sub>Native iOS · One continuous take · Normal speed · MP4 2.1 MB</sub>
+</p>
+
+The whole-field overview, Follow and Battle cameras, seeking, 2× speed, Timing,
+Lab comparison, telemetry values and the whole-field finish. The app is driven by
+a UI test on the iPhone 17 Pro Simulator with the bundled OpenF1 excerpt; the 3D
+scene is moving, not a sequence of mockups.
+
+[Recording notes and website embed](Showcase/README.md).
+
+Every screenshot and frame below is a real iPhone 17 Pro capture from the iOS 26.5
+Simulator. The device frame is drawn around the capture; the app pixels inside it
+are untouched.
 
 ## Screens
 
 <p align="center">
-  <img src="Screenshots/01-race-overview.png" width="360" alt="Vantage Race screen: the whole Suzuka field on an olive tabletop miniature, 17 moving cars, driver labels and group counts" />
+  <img src="Screenshots/framed/01-race-overview.png" width="300" alt="Vantage Race screen: the whole Suzuka field on an olive tabletop miniature, 17 moving cars, driver labels and group counts" />
   <br />
   <sub><strong>Race</strong> — the whole field at 00:04. Seventeen moving streams, recorded lap and timing, and ×N badges where projected cars overlap.</sub>
 </p>
@@ -39,37 +55,35 @@ Metal/WebGPU; the footage is simulator capture, not a physical iPhone.
 <table>
   <tr>
     <td width="50%" valign="top">
-      <img src="Screenshots/02-race-follow.png" alt="Vantage Follow camera: NOR through the Suzuka hairpin, with the selected car label and ground ring" />
+      <img src="Screenshots/framed/02-race-follow.png" alt="Vantage Follow camera: NOR through the Suzuka hairpin, with the selected car label and ground ring" />
       <br /><sub><strong>Follow</strong> — NOR through the hairpin. Drag to orbit, pinch to zoom; the selected car keeps its label and ground ring.</sub>
     </td>
     <td width="50%" valign="top">
-      <img src="Screenshots/03-race-battle.png" alt="Vantage Battle camera: NOR and HAM held in one frame with group count badges" />
+      <img src="Screenshots/framed/03-race-battle.png" alt="Vantage Battle camera: NOR and HAM held in one frame with group count badges" />
       <br /><sub><strong>Battle</strong> — NOR and HAM in one frame. Group counts disclose overlapping projections rather than inventing lanes.</sub>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <img src="Screenshots/04-timing.png" alt="Vantage Timing screen: recorded order with gaps, last lap and source age" />
+      <img src="Screenshots/framed/04-timing.png" alt="Vantage Timing screen: recorded order with gaps, last lap and source age" />
       <br /><sub><strong>Timing</strong> — recorded order with gap or interval, last lap and source age. Sparse events are not inferred from the miniature.</sub>
     </td>
     <td width="50%" valign="top">
-      <img src="Screenshots/05-telemetry.png" alt="Vantage Lab screen: time-aligned speed traces and telemetry readouts for two drivers" />
-      <br /><sub><strong>Lab</strong> — time-aligned speed traces plus speed, throttle, brake, gear and RPM at the shared cursor.</sub>
+      <img src="Screenshots/framed/05-telemetry.png" alt="Vantage Lab screen: time-aligned speed traces and telemetry readouts for two drivers" />
+      <br /><sub><strong>Lab</strong> — time-aligned speed traces for the selected pair, plus the shared cursor and telemetry below.</sub>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <img src="Screenshots/06-telemetry-values.png" alt="Vantage telemetry values: speed, throttle, brake, gear and RPM for two drivers with source ages" />
+      <img src="Screenshots/framed/06-telemetry-values.png" alt="Vantage telemetry values: speed, throttle, brake, gear and RPM for two drivers with source ages" />
       <br /><sub><strong>Telemetry</strong> — speed, throttle, binary brake, gear and RPM at the shared cursor, with source age beside each driver.</sub>
     </td>
     <td width="50%" valign="top">
-      <img src="Screenshots/07-return-paused.png" alt="Vantage Race screen after returning from Timing and Lab, with the whole field and selected driver" />
+      <img src="Screenshots/framed/07-return-paused.png" alt="Vantage Race screen after returning from Timing and Lab, with the whole field and selected driver" />
       <br /><sub><strong>Return</strong> — returning to Race keeps the shared cursor and selected driver; the replay does not silently resume.</sub>
     </td>
   </tr>
 </table>
-
-Every screen above is a real native capture from the iPhone 17 Pro Simulator (iOS 26.5, 1206×2622) running the Metal/WebGPU backend. The status bar is the simulator's. No WebView, video or screenshot fallback. Raw captures live in `shots/ios-showcase/`; the frames are generated by `scripts/make_readme_screenshots.py`.
 
 ## Status (October 2026) — pre-release
 
@@ -100,8 +114,8 @@ No store submission. The local APK is debug-key signed — not a Play Store arti
 | `replay-prototype/` | Browser proof the app grew out of: 17 moving cars, seekable clock, recorded telemetry. |
 | `assets/` | Editable 3D circuit sources (`.blend`), renders, fonts and licences. |
 | `shots/` | Dated visual evidence: design sheets, device captures, measured before/after pairs. |
-| `Screenshots/` | README screen frames generated from the iPhone Simulator captures. |
-| `Showcase/` | 31-second iPhone Simulator walkthrough, GIF preview, poster and capture provenance. |
+| `Screenshots/framed/` | Framed iPhone 17 Pro screenshots used by the README. Raw captures live in `shots/ios-showcase/`. |
+| `Showcase/` | 34-second framed iPhone Simulator walkthrough, GIF preview and capture provenance. |
 | `references/` | Primary-source research material. |
 | `scripts/` | Python scene-render and design-validation scripts. |
 

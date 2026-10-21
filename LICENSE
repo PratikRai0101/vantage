@@ -7,7 +7,8 @@ without prior written permission from the copyright holder.
 
 Third-party components, fonts, data and reference works remain under their own licences:
 
-- `assets/CIRCUIT-LICENSE.txt` -- Suzuka plan geometry (MIT)
-- `assets/archivo-OFL.txt` -- Archivo typeface (SIL Open Font License)
+- `mobile/assets/licenses/CIRCUIT-LICENSE.txt` -- Suzuka plan geometry (MIT)
+- `mobile/assets/licenses/ibmplexmono-OFL.txt` -- IBM Plex Mono (SIL Open Font License)
+- `mobile/LICENSE` -- Expo template notice (MIT)
 - `mobile/assets/licenses/third_party_notices.json` -- notices bundled into the native app
-- `replay-prototype/data/SOURCES.md` -- timing/telemetry provenance and terms
+- `mobile/pipeline/data/SOURCES.md` -- timing/telemetry provenance and terms

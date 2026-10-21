@@ -4,11 +4,15 @@ Bakes ambient occlusion + soft studio contact shadows into vertex colour, so
 phones need neither shadow maps nor screen-space postprocessing.
 """
 from pathlib import Path
-import math, re, json, random
+import argparse, math, re, json, random, sys
 import bpy
 from mathutils import Vector
-ROOT = Path(__file__).resolve().parents[2]
-source = (ROOT / 'scripts/render_circuits.py').read_text().split('args=sys.argv[')[0]
+ROOT = Path(__file__).resolve().parents[1]
+original = ROOT / 'pipeline/geometry/render_circuits.py'
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--output', type=Path, default=ROOT/'assets/models/suzuka-world.glb')
+args = parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+source = original.read_text().split('args=sys.argv[')[0]
 source = re.sub(r'^ cars=\[.*$', ' cars=[]', source, flags=re.M)
 source = source.replace("for x in range(-47,50,8):box((x,0,.235),(4,58,.035),'patch')", "pass # no decorative mowing stripes")
 # Small groves, not a random scatter across the entire island.
@@ -38,7 +42,7 @@ source = source.replace(" if abs(q.x)<51 and abs(q.y)<28:", """ # This is a mode
  if abs(q.x)<51 and abs(q.y)<28:""")
 cut = source.index(" out=os.path.join(ROOT,'assets','circuit-'+style+'.png')")
 source = source[:cut] + "\n return\n"
-ns = {'__file__': str(ROOT/'scripts/render_circuits.py')}
+ns = {'__file__': str(original)}
 exec(compile(source, 'authored-maquette', 'exec'), ns)
 ns['PALETTES']['a'].update(land='#536047', patch='#536047', base='#35453B', road='#303A3C', curb='#D6D7C6', red='#AA6152', tree='#394F3B', tree2='#526346', building='#B2B6AC', trim='#89978D', seat='#6D8285')
 # Remove tiny Catmull backtracking loops from the VISUAL ribbon only. Keep its
@@ -138,6 +142,7 @@ for obj in objects:
   mat.use_nodes=True
   # Exporter includes active COLOR_0 even when the simple material has no image.
 
-out=ROOT/'mobile/assets/models/suzuka-world.glb'
+out=args.output.resolve()
+out.parent.mkdir(parents=True,exist_ok=True)
 bpy.ops.export_scene.gltf(filepath=str(out),export_format='GLB',export_cameras=False,export_lights=False,export_extras=True,export_vertex_color='NAME',export_vertex_color_name='StudioLight',export_all_vertex_colors=False)
 print('NATIVE_STUDIO_WORLD',out,flush=True)

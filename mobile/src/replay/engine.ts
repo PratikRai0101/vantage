@@ -3,7 +3,7 @@ import { snapshotDriver, standings as sampleStandings } from './sampling';
 
 /**
  * React display-clock cadence in accepted frame time. The native scene never uses this.
- * Readouts show whole seconds; see RENDER-STABILITY.md for the measured React commit cost.
+ * Readouts show whole seconds; see docs/architecture.md for the measured React commit cost.
  */
 export const CLOCK_PUBLISH_SECONDS = 1;
 

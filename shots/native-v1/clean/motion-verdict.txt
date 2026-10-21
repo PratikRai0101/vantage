@@ -1,2 +1,0 @@
-Camera changed pixels: 0; moving-field changed pixels: 0
-FAIL: native GL camera/motion stale (UI labels alone are not evidence)

@@ -1,7 +1,7 @@
 # Offline replay core
 
 Pure TypeScript: no React/React Native imports, network requests or animation timers.
-`mobile/assets/replay/{playback,track}.json` are byte-for-byte copies of the authoritative prototype fixtures. Rights and reconstruction limitations remain in `replay-prototype/data/SOURCES.md` and the fixtures' own metadata.
+`mobile/assets/replay/{playback,track}.json` are the canonical prepared fixtures. The cached source data and offline rebuild scripts live in `mobile/pipeline/`; see [`../../pipeline/README.md`](../../pipeline/README.md) or [`../../pipeline/data/SOURCES.md`](../../pipeline/data/SOURCES.md) for rights, provenance and reconstruction limitations. The fixtures' historical metadata remains unchanged.
 
 ## Loading and clock ownership
 

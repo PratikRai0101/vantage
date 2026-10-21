@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vantage native scene — art review only</title>
+<style>
+  body { margin: 0; background: #101719; color: #c6d9df; font: 14px system-ui; }
+  p { margin: 16px; }
+  canvas, img { display: block; width: 100%; max-width: 1080px; height: auto; }
+</style>
+<p>Native asset art review. Browser rendering is not device acceptance.</p>
+<script type="module">
+  try {
+    await import('../build-logs/preview.js');
+    for (const key of ['REVIEW', 'FULL', 'SSAA']) {
+      if (!window[key]) continue;
+      const image = new Image();
+      image.alt = key; image.src = window[key]; document.body.append(image);
+    }
+  } catch (error) {
+    const message = document.createElement('p');
+    message.textContent = 'Build preview.js first; see docs/architecture.md. ' + error.message;
+    document.body.append(message);
+    console.error(error);
+  }
+</script>
+</html>

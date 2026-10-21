@@ -24,7 +24,6 @@ xcrun simctl launch booted dev.vantage.spectator
 # Working JDK + Android SDK required. Export JAVA_HOME, PATH and ANDROID_HOME first.
 npm run build:android
 # builds/vantage-replay.apk — local testing key, NOT Play Store signing
-# The verified SSAA snapshot is preserved as builds/vantage-ssaa.apk.
 ```
 
 Native folders are CNG-generated from `app.json`; do not hand-edit them. The simulator `.app` cannot be installed on a physical iPhone. Device distribution needs appropriate Apple signing. Logs/artifacts are ignored by Git.
@@ -54,14 +53,14 @@ The links are repeatable state inputs, **not a substitute for touch/VoiceOver te
 
 ## Honest limits
 
-- See `../NATIVE-VALIDATION.md` for the actual build/runtime evidence and remaining device gates. Compile/test success alone does not prove native 3D rendering.
-- Physical iPhone performance, real-device GPU pacing, a thermal profile, gestures, haptics, VoiceOver/TalkBack, large text and other Android devices need acceptance. Simulator capture is not a physical-device result; Note20 aggregate pacing is in `../RENDER-STABILITY.md`; it is not a GPU trace.
+- See [validation](../docs/validation.md) for the actual build/runtime evidence and remaining device gates. Compile/test success alone does not prove native 3D rendering.
+- Physical iPhone performance, real-device GPU pacing, a thermal profile, gestures, haptics, VoiceOver/TalkBack, large text and other Android devices need acceptance. Simulator capture is not a physical-device result; Note20 aggregate pacing is in [validation](../docs/validation.md); it is not a GPU trace.
 - Geometry, elevation, racing lanes and pit paths are illustrative; route projection is not surveyed positioning. No exact contact/overtake claims, simulated fuel, tyre temperature or battery data.
 - No accounts, billing, licensed live feeds or production backend yet.
-- `npm audit` currently reports 28 advisories (8 moderate, 20 high). Do not force incompatible Expo downgrades. Assess advisory reachability and adopt compatible upstream patches before production.
+- Run `npm audit` before release; the previous audit had unresolved advisories. Assess reachability and adopt compatible upstream patches rather than forcing incompatible Expo downgrades.
 
 ## Sources and rights
 
-The JSON fixtures are byte-identical to the prepared browser replay; the native model is a separately refined car-free GLB with baked vertex lighting, rounded edges, quieter planting and roof details. The browser model remains unchanged. Regenerate the native world with Blender using `scripts/export_studio_world.py`; regenerate OFL Plex GPU-label coverage with `python3 scripts/build_label_glyphs.py` (Pillow). `scripts/patch-three-native.mjs` is a version-pinned postinstall guard for Three 0.180’s WebGPU `VideoFrame` check; keep it until Three is upgraded and re-tested. See `../replay-prototype/data/SOURCES.md` for source windows, provenance, registration and runtime/source distinctions. The original model and both licenses are bundled under `assets/`.
+Canonical runtime fixtures live in `assets/replay/`; cached source inputs, original queries, provenance and rebuild tools live in [`pipeline/`](pipeline/README.md). The model is a car-free GLB with baked vertex lighting, rounded edges, quieter planting and roof details. Regenerate it with Blender using `scripts/export_studio_world.py`; regenerate OFL Plex GPU-label coverage with `python3 scripts/build_label_glyphs.py` (Pillow). `scripts/patch-three-native.mjs` is a version-pinned postinstall guard for Three 0.180’s WebGPU `VideoFrame` check; keep it until Three is upgraded and re-tested. See [`pipeline/data/SOURCES.md`](pipeline/data/SOURCES.md) for source windows, registration and runtime/source distinctions. Full third-party notices and circuit/font licences are under `assets/licenses/`; Vantage's own terms are in the root `LICENSE`.
 
 Circuit-plan source: MIT `bacinger/f1-circuits`. Font: IBM Plex Mono, OFL. No official F1 mesh, logo, broadcast footage or Apple font is bundled. **Historical data availability is not commercial clearance.** Personal/noncommercial evaluation only until rights are resolved.

@@ -35,5 +35,8 @@ mobile/.toolchain/
 # Blender autosave backups
 *.blend1
 
-# Generated preview bundles (rebuild with mobile/scripts/preview-*.ts; see RENDER-STABILITY.md)
-shots/**/preview.js
+# Python caches and generated authoring previews
+__pycache__/
+*.py[cod]
+.pytest_cache/
+mobile/pipeline/assets/

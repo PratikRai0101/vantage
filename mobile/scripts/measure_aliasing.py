@@ -8,8 +8,8 @@ contrast. A hard 1-pixel staircase has a max-step ratio near 1.0; an antialiased
 edge spreads the same contrast over two or more pixels.
 
 Examples:
-  python3 scripts/measure_aliasing.py shots/quality-overview/after-overview.png \
-    --crop 0,527,1080,1483 --reference shots/quality-overview/full.png
+  python3 mobile/scripts/measure_aliasing.py shots/android-note20/01-overview.png \
+    --crop 0,527,1080,1483 --reference shots/android-note20/baseline/overview-browser-msaa.png
   python3 scripts/measure_aliasing.py capture.png --panel /tmp/alias.png \
     --box 650,620,930,860
 """
